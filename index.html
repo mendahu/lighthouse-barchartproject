@@ -4,15 +4,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="chart-draw.js"></script>
     <script src="chart-gather.js"></script>
-    <script src="styles.css"></script>
+    <link href="reset.css" rel="stylesheet" type="text/css">
+    <link href="styles.css" rel="stylesheet" type="text/css">
     <title>Bar Chart Generator</title>
   </head>
   <body>
-    <header>
-      <h1>Bar Chart Generator</h1>
-      <p>by Jake Robins</p>
-    </header>
     <main>
+      <header>
+        <h1>Bar Chart Generator</h1>
+        <p>by Jake Robins</p>
+      </header>
       <section id="inputSection">
         <h2>Select your options and input your data</h2>
         <button id="submit" onclick="drawBarChart([1,2,3,4,5],6,7)">Generate!</button>
@@ -23,6 +24,9 @@
 
         </div>
       </section>
+      <footer>
+
+      </footer>
     </main>
   </body>
 </html>
