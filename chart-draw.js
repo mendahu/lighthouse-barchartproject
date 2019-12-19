@@ -53,12 +53,14 @@ const drawBarChart = function(data, options, element) {
     dataColour2: "#ff0000",
     dataColour3: "#00ff00",
     titleVisible: false,
-    title: "Sample Title",
+    title: "Please Set A Title",
     titleSize: "Med",
     titleColour: "#000000",
     backgroundColour: "#ffffff",
     xAxisLabelVisible: false,
-    yAxisLabelVisible: false
+    xAxisLabel: "Please Set An X Axis Label",
+    yAxisLabelVisible: false,
+    yAxisLabel: "Please Set A Y Axis Label"
   };
 
   //Creates new options object which has defaults but is overwritten by user inputs, processed by a helper function to clean it up.
@@ -115,6 +117,35 @@ const drawBarChart = function(data, options, element) {
       "grid-row-end": "title-end"
     };
     $("#chart-title").css(chartTitleCSS);
+  }
+
+  //Place x Axis Label
+  if (processedOptions.xAxisLabelVisible === true) {
+    $figure.append("<span id=\"x-axis-label\">" + processedOptions.xAxisLabel + "</span>");
+    let xAxisCSS = {
+      "color": processedOptions.titleColour,
+      "grid-column-start": "bar-chart-left",
+      "grid-column-end": "bar-chart-right",
+      "grid-row-start": "x-axis-label-start",
+      "grid-row-end": "x-axis-label-end"
+    };
+    $("#x-axis-label").css(xAxisCSS);
+  }
+
+  //Place y Axis Label
+  if (processedOptions.yAxisLabelVisible === true) {
+    $figure.append("<span id=\"y-axis-label\">" + processedOptions.yAxisLabel + "</span>");
+    let yAxisCSS = {
+      "color": processedOptions.titleColour,
+      "display": "block",
+      "writing-mode": "tb-rl",
+      "transform": "rotate(180deg)",
+      "grid-column-start": "y-axis-label-start",
+      "grid-column-end": "y-axis-label-end",
+      "grid-row-start": "bar-chart-top",
+      "grid-row-end": "bar-chart-bottom"
+    };
+    $("#y-axis-label").css(yAxisCSS);
   }
 
 };
