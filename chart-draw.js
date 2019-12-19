@@ -67,12 +67,6 @@ const drawBarChart = function(data, options, element) {
   //ProcessedOptions will be used going forward
   let processedOptions = optionsCleaner(Object.assign(defaultOptions, options));
 
-  //Determines a base unit of width for charting the bars, based on how many data points were passed
-  //Narrow spacing makes the spaces half the width of a bar
-  //Even spacing makes the spaces the same as the bar
-  //Wide spacing makes the spaces 150% the width of a bar
-  let widthUnit = (data.length * 2) + ((data.length + 1) * processedOptions.barSpacing);
-
   //Go to work creating the graph DOM elements
   //This creates the Chart div which is where the bars live and sets its height to the width of its container
   element.append("<figure id=\"chart\"></figure>");
@@ -98,12 +92,12 @@ const drawBarChart = function(data, options, element) {
 
   //Create grid-template-columns based on options
   (processedOptions.yAxisLabelVisible === true)
-    ? $figure.css("grid-template-columns", "[y-axis-label-start]" + chartSizes.axisWidth + "[y-axis-label-end y-axis-start]" + chartSizes.axisWidth + "[y-axis-end bar-chart-left]" + chartSizes.barChartWidth + "[bar-chart-right]")
-    : $figure.css("grid-template-columns", "[y-axis-start]" + chartSizes.axisWidth + "[y-axis-end bar-chart-left]" + chartSizes.barChartWidth + "[bar-chart-right]");
+  ? $figure.css("grid-template-columns", "[y-axis-label-start]" + chartSizes.axisWidth + "[y-axis-label-end y-axis-start]" + chartSizes.axisWidth + "[y-axis-end bar-chart-left]" + chartSizes.barChartWidth + "[bar-chart-right]")
+  : $figure.css("grid-template-columns", "[y-axis-start]" + chartSizes.axisWidth + "[y-axis-end bar-chart-left]" + chartSizes.barChartWidth + "[bar-chart-right]");
   //Create grid-template-rows based on options
   (processedOptions.xAxisLabelVisible === true)
-    ? $figure.css("grid-template-rows", "[title-start]" + chartSizes.axisWidth + "[title-end bar-chart-top]" + chartSizes.barChartHeight + "[bar-chart-bottom x-axis-start]" + chartSizes.axisWidth + "[x-axis-end x-axis-label-start]" + chartSizes.axisWidth + "[x-axis-label-end]")
-    : $figure.css("grid-template-rows", "[title-start]" + chartSizes.axisWidth + "[title-end bar-chart-top]" + chartSizes.barChartHeight + "[bar-chart-bottom x-axis-start]" + chartSizes.axisWidth + "[x-axis-end]");
+  ? $figure.css("grid-template-rows", "[title-start]" + chartSizes.axisWidth + "[title-end bar-chart-top]" + chartSizes.barChartHeight + "[bar-chart-bottom x-axis-start]" + chartSizes.axisWidth + "[x-axis-end x-axis-label-start]" + chartSizes.axisWidth + "[x-axis-label-end]")
+  : $figure.css("grid-template-rows", "[title-start]" + chartSizes.axisWidth + "[title-end bar-chart-top]" + chartSizes.barChartHeight + "[bar-chart-bottom x-axis-start]" + chartSizes.axisWidth + "[x-axis-end]");
 
   //Place Title and style as determined by options
   if (processedOptions.titleVisible === true) {
@@ -119,7 +113,7 @@ const drawBarChart = function(data, options, element) {
     $("#chart-title").css(chartTitleCSS);
   }
 
-  //Place x Axis Label
+  //Place x Axis Label and style as determined by options
   if (processedOptions.xAxisLabelVisible === true) {
     $figure.append("<span id=\"x-axis-label\">" + processedOptions.xAxisLabel + "</span>");
     let xAxisCSS = {
@@ -132,7 +126,7 @@ const drawBarChart = function(data, options, element) {
     $("#x-axis-label").css(xAxisCSS);
   }
 
-  //Place y Axis Label
+  //Place y Axis Label and style as determined by options
   if (processedOptions.yAxisLabelVisible === true) {
     $figure.append("<span id=\"y-axis-label\">" + processedOptions.yAxisLabel + "</span>");
     let yAxisCSS = {
@@ -147,6 +141,56 @@ const drawBarChart = function(data, options, element) {
     };
     $("#y-axis-label").css(yAxisCSS);
   }
+
+  //Determines a base unit of width for charting the bars, based on how many data points were passed
+  //Narrow spacing makes the spaces half the width of a bar
+  //Even spacing makes the spaces the same as the bar
+  //Wide spacing makes the spaces 150% the width of a bar
+  let widthUnit = (data.length * 2) + ((data.length + 1) * processedOptions.barSpacing);
+
+  //Create Bar Chart using Flexboxes
+  $figure.append("<div id=\"bar-chart\"></div>");
+  let barChartCSS = {
+    "display": "flex",
+    "flex-wrap": "nowrap",
+    "justify-content": "space-evenly",
+    "align-items": "stretch",
+    "grid-column-start": "bar-chart-left",
+    "grid-column-end": "bar-chart-right",
+    "grid-row-start": "bar-chart-top",
+    "grid-row-end": "bar-chart-bottom"
+  };
+  $("#bar-chart").css(barChartCSS);
+
+  //Populate bar chart flexbox with columns for bars of data and space between
+  for (let i = 0; i < data.length; i++) {
+    $("#bar-chart").append("<div id=\"bar-chart-space-" + (i + 1) + "\" class=\"bar-chart-space\"></div>");
+    $("#bar-chart").append("<div id=\"bar-chart-data-" + (i + 1) + "\" class=\"bar-chart-data\"></div>");
+  }
+  $("#bar-chart").append("<div id=\"bar-chart-space-" + (data.length + 1) + "\" class=\"bar-chart-space\"></div>");
+
+  //Assign size & spacing to bars and spaces based on inputs
+  $(".bar-chart-space").css("flex-basis", (processedOptions.barSpacing / widthUnit));
+  $(".bar-chart-datae").css("flex-basis", (2 / widthUnit));
+
+  $(".bar-chart-space").css("flex-grow", processedOptions.barSpacing);
+  $(".bar-chart-data").css("flex-grow", "2");
+
+  //Convert data into nested arrays of data. Reduces code redundancy since we could be passed multiple datas point ber par
+  for (let i = 0; i < data.length; i++) {
+    if (typeof data[i] === "number") {
+      data[i] = [data[i]];
+    }
+  }
+
+  //Sort the data to determine highest number. Will first reduce any nested arrays for multiple values
+  let sortedData = data;
+  const dataReducer = (acc, cv) => acc + cv;
+  for (let i = 0; i < sortedData.length; i++) {
+    sortedData[i] = sortedData[i].reduce(dataReducer);
+  }
+  sortedData = sortedData.sort((a, b) => b - a);
+  let highestDataPoint = sortedData[0];
 
 };
 
