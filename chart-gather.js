@@ -4,7 +4,7 @@ $(document).ready(function() {
 });
 
 let gatheredData = [1, 2, 3, 4, 5];
-let gatheredOptions = {barSpacing: "wide", valuePosition: "centre"};
+let gatheredOptions = {barSpacing: "wide", valuePosition: "centre", titleVisible: true, title: "Test Title", xAxisLabelVisible: true, yAxisLabelVisible: true};
 
 const gatherData = function() {
   //
