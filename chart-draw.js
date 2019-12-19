@@ -48,7 +48,7 @@ const drawBarChart = function(data, options, element) {
 
   //Go to work creating the graph DOM elements
   //This creates the Chart div which is where the bars live and sets its height to the width of its container
-  element.append("<div id=\"chart\"></div>");
+  element.append("<figure id=\"chart\"></figure>");
   //$("#chart");
 
   //This creates vertical columns that represent spaces and bars
