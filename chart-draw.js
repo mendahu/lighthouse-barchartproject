@@ -5,52 +5,61 @@ $(document).ready(function() {
 
 
 
-/*
-const optionsCleaner = function(options) {
+//Helper function that processes options for easier use with function that draws chart
+const optionsCleaner = function(unProcessedOptions) {
 
-  //console.log(processedOptions);
+  //First copy the unProcessedOptions to our processing object
+  let inProcessingOptions = Object.assign({}, unProcessedOptions);
 
   //Takes the barSpacing option string and converts it to an appropriate multiplier.
-  switch (options.barSpacing) {
+  switch (unProcessedOptions.barSpacing) {
   case "narrow":
-    processedOptions.barSpacing = 1;
+    inProcessingOptions.barSpacing = 1;
     break;
   case "even":
-    processedOptions.barSpacing = 2;
+    inProcessingOptions.barSpacing = 2;
     break;
   case "wide":
-    processedOptions.barSpacing = 3;
+    inProcessingOptions.barSpacing = 3;
     break;
   default:
-    processedOptions.barSpacing = 2;
+    inProcessingOptions.barSpacing = 2;
   }
+
+  return inProcessingOptions;
 };
-*/
+
 
 const drawBarChart = function(data, options, element) {
 
   //Sets default options
   const defaultOptions = {
-    barSpacing: "even"
+    barSpacing: "even",
+    valueLabelPosition: "top",
+    valueLabelColour: "ffffff",
+    dataColour1: "#0000ff",
+    dataColour2: "#ff0000",
+    dataColour3: "#00ff00"
   };
+
+  //Creates new options object which has defaults but is overwritten by user inputs, processed by a helper function to clean it up.
+  //ProcessedOptions will be used going forward
+  let processedOptions = optionsCleaner(Object.assign(defaultOptions, options));
+
+
+
 
   console.log("The data points submitted are: ");
   console.log(data);
-
   console.log("The Default options are: ");
   console.log(defaultOptions);
-
-  console.log("The test options are: ");
+  console.log("The Gathered options are: ");
   console.log(gatheredOptions);
-
-  //Creates new options object which has defaults but is overwritten by user inputs. processOptions will be used going forward
-  let processedOptions = Object.assign(defaultOptions, options);
-
-  console.log("The processed options are: ");
+  console.log("The Processed options are: ");
   console.log(processedOptions);
 
-  //Helper function that takes in user submitted options, cleans them up for use in the function
-  //optionsCleaner();
+
+  //console.log(element);
 
   //Determines a base unit of width for charting the bars, based on how many data points were passed
   //Narrow spacing makes the spaces half the width of a bar
