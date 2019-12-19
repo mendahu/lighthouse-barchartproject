@@ -33,7 +33,11 @@ const drawBarChart = function(data, options, element) {
     valueLabelColour: "ffffff",
     dataColour1: "#0000ff",
     dataColour2: "#ff0000",
-    dataColour3: "#00ff00"
+    dataColour3: "#00ff00",
+    titleVisible: false,
+    title: "Sample Title",
+    titleSize: "Med",
+    titleColour: "000000"
   };
 
   //Creates new options object which has defaults but is overwritten by user inputs, processed by a helper function to clean it up.
