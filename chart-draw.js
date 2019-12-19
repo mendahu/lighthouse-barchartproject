@@ -1,9 +1,3 @@
-$(document).ready(function() {
-  //Adds the onclick listener to the generate button.
-  $("#data-submit").attr("onclick", "drawBarChart(gatheredData, gatheredOptions, gatheredElement)");
-});
-
-
 
 //Helper function that processes options for easier use with function that draws chart
 const optionsCleaner = function(unProcessedOptions) {
@@ -11,7 +5,7 @@ const optionsCleaner = function(unProcessedOptions) {
   //First copy the unProcessedOptions to our processing object
   let inProcessingOptions = Object.assign({}, unProcessedOptions);
 
-  //Takes the barSpacing option string and converts it to an appropriate multiplier.
+  //Takes the barSpacing option string and converts it from human readable to an appropriate multiplier that we can use later
   switch (unProcessedOptions.barSpacing) {
   case "narrow":
     inProcessingOptions.barSpacing = 1;
@@ -46,9 +40,6 @@ const drawBarChart = function(data, options, element) {
   //ProcessedOptions will be used going forward
   let processedOptions = optionsCleaner(Object.assign(defaultOptions, options));
 
-
-
-
   console.log("The data points submitted are: ");
   console.log(data);
   console.log("The Default options are: ");
@@ -65,8 +56,11 @@ const drawBarChart = function(data, options, element) {
   //Narrow spacing makes the spaces half the width of a bar
   //Even spacing makes the spaces the same as the bar
   //Wide spacing makes the spaces 150% the width of a bar
-  //let barWidthUnit = (data.length * 2) + ((data.length + 1) * processedOptions.barSpacing);
+  let barWidthUnit = (data.length * 2) + ((data.length + 1) * processedOptions.barSpacing);
 
-  //console.log(barWidthUnit);
+  console.log(element);
+
+  $("#chart-container").append("<div id=\"chart\"></div>");
+
 };
 
