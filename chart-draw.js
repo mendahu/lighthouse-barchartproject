@@ -56,7 +56,7 @@ const drawBarChart = function(data, options, element) {
     title: "Sample Title",
     titleSize: "Med",
     titleColour: "#000000",
-    backgroundColour: "ffffff",
+    backgroundColour: "#ffffff",
     xAxisLabelVisible: false,
     yAxisLabelVisible: false
   };
@@ -81,14 +81,19 @@ const drawBarChart = function(data, options, element) {
   //All the chart sizing and labels is contained in this object for easy manipulation by API developper. User will have a responsive design and will not have access to these.
   let chartSizes = {
     figureWidth: "960px",
-    axisWidth: "96px",
+    axisWidth: "50px",
     barChartWidth: "1fr",
     barChartHeight: "1fr"
   };
 
   //format the figure for CSS Grid
-  $figure.css("display", "grid");
-  $figure.css("width", chartSizes.figureWidth);
+  let figureCSS = {
+    "display": "grid",
+    "width": chartSizes.figureWidth,
+    "background-color": processedOptions.backgroundColour
+  };
+  $figure.css(figureCSS);
+
   //Create grid-template-columns based on options
   (processedOptions.yAxisLabelVisible === true)
     ? $figure.css("grid-template-columns", "[y-axis-label-start]" + chartSizes.axisWidth + "[y-axis-label-end y-axis-start]" + chartSizes.axisWidth + "[y-axis-end bar-chart-left]" + chartSizes.barChartWidth + "[bar-chart-right]")
@@ -98,7 +103,19 @@ const drawBarChart = function(data, options, element) {
     ? $figure.css("grid-template-rows", "[title-start]" + chartSizes.axisWidth + "[title-end bar-chart-top]" + chartSizes.barChartHeight + "[bar-chart-bottom x-axis-start]" + chartSizes.axisWidth + "[x-axis-end x-axis-label-start]" + chartSizes.axisWidth + "[x-axis-label-end]")
     : $figure.css("grid-template-rows", "[title-start]" + chartSizes.axisWidth + "[title-end bar-chart-top]" + chartSizes.barChartHeight + "[bar-chart-bottom x-axis-start]" + chartSizes.axisWidth + "[x-axis-end]");
 
-
+  //Place Title and style as determined by options
+  if (processedOptions.titleVisible === true) {
+    $figure.append("<h2 id=\"chart-title\">" + processedOptions.title + "</h2>");
+    let chartTitleCSS = {
+      "color": processedOptions.titleColour,
+      "font-size": processedOptions.titleSize,
+      "grid-column-start": "bar-chart-left",
+      "grid-column-end": "bar-chart-right",
+      "grid-row-start": "title-start",
+      "grid-row-end": "title-end"
+    };
+    $("#chart-title").css(chartTitleCSS);
+  }
 
 };
 
