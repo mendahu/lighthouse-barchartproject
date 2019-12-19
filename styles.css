@@ -11,3 +11,9 @@ main {
   background-color: white;
   color: black;
 }
+
+#chart {
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+}
