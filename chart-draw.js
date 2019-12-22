@@ -38,6 +38,64 @@ const optionsCleaner = function(unProcessedOptions) {
   return inProcessingOptions;
 };
 
+//Helper function that uses the data provided to determine a dynamic scale for the Y Axis
+const scaleCalculator = function(givenData) {
+
+  //Create empty object to house data
+  let returnedData = {
+    maxYHeight: 0,
+    scaleTicks: 0
+  };
+
+  //Sort the data to determine highest number. Will first reduce any nested arrays for multiple values
+  let sortedData = givenData;
+  const dataReducer = (acc, cv) => acc + cv;
+  for (let i = 0; i < sortedData.length; i++) {
+    sortedData[i] = sortedData[i].reduce(dataReducer);
+  }
+  sortedData = sortedData.sort((a, b) => b - a);
+  let highestDataPoint = sortedData[0];
+  console.log(highestDataPoint);
+
+  //Calculate the precision of highest data point
+  let decimalPrecision = 0;
+  if (highestDataPoint.toString().split(".").length > 1) {
+    decimalPrecision = highestDataPoint.toString().split(".").reverse()[0].length;
+  } else {
+    decimalPrecision = 0;
+  }
+  console.log(decimalPrecision);
+
+  //Determines the maximum scale height of the axis.
+  //This function begins adding numbers to the highest data point until it is at a round number that is at least 10% higher
+  let maxYHeight = highestDataPoint;
+  let adder;
+  if (highestDataPoint >= 10) {
+    adder = 1;
+  } else {
+    adder = (Math.pow(10, -decimalPrecision) / 10);
+  }
+  console.log(adder);
+  console.log(maxYHeight);
+  console.log((5 * Math.pow(10, -decimalPrecision)));
+
+  while (maxYHeight < (highestDataPoint * 1.1)) {
+    maxYHeight += adder;
+    while (maxYHeight % (0.5 * Math.pow(10, -decimalPrecision)) !== 0) {
+      maxYHeight += adder;
+      console.log(maxYHeight);
+    }
+    if (maxYHeight % (0.1 * Math.pow(10, -decimalPrecision)) === 0) {
+      adder = adder * 10;
+    }
+  }
+
+  returnedData.maxYHeight = maxYHeight;
+  returnedData.scaleTicks = adder;
+
+  return returnedData;
+
+};
 
 /********************************************************
 
@@ -180,7 +238,7 @@ const drawBarChart = function(data, options, element) {
 
   //Assign size & spacing to bars and spaces based on inputs
   $(".bar-chart-space").css("flex-basis", (processedOptions.barSpacing / widthUnit));
-  $(".bar-chart-datae").css("flex-basis", (2 / widthUnit));
+  $(".bar-chart-data").css("flex-basis", (2 / widthUnit));
 
   $(".bar-chart-space").css("flex-grow", processedOptions.barSpacing);
   $(".bar-chart-data").css("flex-grow", "2");
@@ -192,15 +250,11 @@ const drawBarChart = function(data, options, element) {
     }
   }
 
-  //Sort the data to determine highest number. Will first reduce any nested arrays for multiple values
-  let sortedData = data;
-  const dataReducer = (acc, cv) => acc + cv;
-  for (let i = 0; i < sortedData.length; i++) {
-    sortedData[i] = sortedData[i].reduce(dataReducer);
-  }
-  sortedData = sortedData.sort((a, b) => b - a);
-  let highestDataPoint = sortedData[0];
-  let lowestDataPoint = sortedData[sortedData.length - 1];
+  //This helper function determines a scale for the vertical Y axis based on the data.
+  //Bar charts always start at 0 but the maximum height and ticks are dynamic
+  //The function outputs an object with the parameters that we use to build the chart
+  let yAxisParameters = scaleCalculator(data);
+  console.log(yAxisParameters);
 
 };
 
