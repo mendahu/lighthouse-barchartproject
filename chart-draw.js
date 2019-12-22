@@ -41,10 +41,12 @@ const optionsCleaner = function(unProcessedOptions) {
 //Helper function that uses the data provided to determine a dynamic scale for the Y Axis
 const scaleCalculator = function(givenData) {
 
-  //Create empty object to house data
-  let returnedData = {
-    maxYHeight: 0,
-    scaleTicks: 0
+  //Create empty object to house scale ticks to be returned
+  let returnedData = [0];
+
+  //Create a more robust rounding function to handle decimals
+  const round = function(value, decimals) {
+    return Number(Math.round(value + "e" + decimals) + "e-" + decimals);
   };
 
   //Sort the data to determine highest number. Will first reduce any nested arrays for multiple values
@@ -55,43 +57,40 @@ const scaleCalculator = function(givenData) {
   }
   sortedData = sortedData.sort((a, b) => b - a);
   let highestDataPoint = sortedData[0];
-  console.log(highestDataPoint);
 
-  //Calculate the precision of highest data point
+  //Calculate the significant digits of highest data point
+  //Forthe purposes of scale height, the significant digit is the first non-zero digit / 10
   let decimalPrecision = 0;
-  if (highestDataPoint.toString().split(".").length > 1) {
-    decimalPrecision = highestDataPoint.toString().split(".").reverse()[0].length;
-  } else {
-    decimalPrecision = 0;
-  }
-  console.log(decimalPrecision);
-
-  //Determines the maximum scale height of the axis.
-  //This function begins adding numbers to the highest data point until it is at a round number that is at least 10% higher
-  let maxYHeight = highestDataPoint;
-  let adder;
-  if (highestDataPoint >= 10) {
-    adder = 1;
-  } else {
-    adder = (Math.pow(10, -decimalPrecision) / 10);
-  }
-  console.log(adder);
-  console.log(maxYHeight);
-  console.log((5 * Math.pow(10, -decimalPrecision)));
-
-  while (maxYHeight < (highestDataPoint * 1.1)) {
-    maxYHeight += adder;
-    while (maxYHeight % (0.5 * Math.pow(10, -decimalPrecision)) !== 0) {
-      maxYHeight += adder;
-      console.log(maxYHeight);
+  let decimalString = highestDataPoint.toString().split(".");
+  if (decimalString[1] !== undefined) {
+    let decimals = decimalString[1].split("");
+    for (let i = 0; i < decimals.length; i++) {
+      if (Number(decimals[i]) !== 0) {
+        decimalPrecision = i + 1;
+        break;
+      }
     }
-    if (maxYHeight % (0.1 * Math.pow(10, -decimalPrecision)) === 0) {
-      adder = adder * 10;
-    }
+  } else {
+    decimalPrecision = 1;
   }
 
-  returnedData.maxYHeight = maxYHeight;
-  returnedData.scaleTicks = adder;
+  //Calculate how many digits a number is
+  let digits = 0;
+  if (Number(decimalString[0]) > 0) {
+    digits = decimalString[0].length;
+  }
+
+  //Create the scaleTicks dynamically
+  let scaleTick = 0;
+  if (digits > 1) {
+    scaleTick = Math.round(highestDataPoint * 0.11);
+  } else {
+    scaleTick = round(highestDataPoint * 0.11, decimalPrecision);
+  }
+
+  for (let i = 1; i <= 10;i ++) {
+    returnedData.push(round(scaleTick * i, decimalPrecision));
+  }
 
   return returnedData;
 
@@ -252,9 +251,9 @@ const drawBarChart = function(data, options, element) {
 
   //This helper function determines a scale for the vertical Y axis based on the data.
   //Bar charts always start at 0 but the maximum height and ticks are dynamic
-  //The function outputs an object with the parameters that we use to build the chart
+  //The function outputs an array with the 11 ticks we will use to build the chart
   let yAxisParameters = scaleCalculator(data);
-  console.log(yAxisParameters);
+
 
 };
 
