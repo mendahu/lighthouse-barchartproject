@@ -39,12 +39,19 @@ const optionsCleaner = function(unProcessedOptions) {
 };
 
 
+/********************************************************
+
+Core function of the API is drawBarChart, which takes in three parameters and calls helper functions
+
+********************************************************/
+
+
 const drawBarChart = function(data, options, element) {
 
   //Clears the existing chart, if there is one
   element.empty();
 
-  //Sets default options
+  //Sets default options to configure the chart
   const defaultOptions = {
     barSpacing: "even",
     valueLabelPosition: "top",
@@ -63,26 +70,26 @@ const drawBarChart = function(data, options, element) {
     yAxisLabel: "Please Set A Y Axis Label"
   };
 
-  //Creates new options object which has defaults but is overwritten by user inputs, processed by a helper function to clean it up.
-  //ProcessedOptions will be used going forward
+  //processedOptions is an amalgamation of the user inputs for options and the defaults to give the function its end results
+  //processedOptions goes through a cleaner function to change human readable inputs to values for use by the drawBarChart function
   let processedOptions = optionsCleaner(Object.assign(defaultOptions, options));
 
-  //Go to work creating the graph DOM elements
-  //This creates the Chart div which is where the bars live and sets its height to the width of its container
-  element.append("<figure id=\"chart\"></figure>");
+  //From here we begin creating DOM elements to display the chart
 
-  //set the figure to a variable for convenience
+  //This creates the "chart" div which is where the chart lives and sets it to a variable for convenience
+  element.append("<figure id=\"chart\"></figure>");
   let $figure = $("#chart");
 
-  //All the chart sizing and labels is contained in this object for easy manipulation by API developper. User will have a responsive design and will not have access to these.
+  //All the chart sizing and labels is contained in this object for easy manipulation by API developper.
+  //User will have a responsive design and will not have access to these.
   let chartSizes = {
-    figureWidth: "960px",
+    figureWidth: "100%",
     axisWidth: "50px",
     barChartWidth: "1fr",
     barChartHeight: "1fr"
   };
 
-  //format the figure for CSS Grid
+  //format the figure for CSS Grid and applies user selected background colour
   let figureCSS = {
     "display": "grid",
     "width": chartSizes.figureWidth,
@@ -144,7 +151,7 @@ const drawBarChart = function(data, options, element) {
 
   //Determines a base unit of width for charting the bars, based on how many data points were passed
   //Narrow spacing makes the spaces half the width of a bar
-  //Even spacing makes the spaces the same as the bar
+  //Even spacing makes the spaces the same width as the bar
   //Wide spacing makes the spaces 150% the width of a bar
   let widthUnit = (data.length * 2) + ((data.length + 1) * processedOptions.barSpacing);
 
@@ -158,7 +165,9 @@ const drawBarChart = function(data, options, element) {
     "grid-column-start": "bar-chart-left",
     "grid-column-end": "bar-chart-right",
     "grid-row-start": "bar-chart-top",
-    "grid-row-end": "bar-chart-bottom"
+    "grid-row-end": "bar-chart-bottom",
+    "border-left": "2px solid " + processedOptions.titleColour,
+    "border-bottom": "2px solid " + processedOptions.titleColour
   };
   $("#bar-chart").css(barChartCSS);
 
@@ -176,7 +185,7 @@ const drawBarChart = function(data, options, element) {
   $(".bar-chart-space").css("flex-grow", processedOptions.barSpacing);
   $(".bar-chart-data").css("flex-grow", "2");
 
-  //Convert data into nested arrays of data. Reduces code redundancy since we could be passed multiple datas point ber par
+  //Convert data into nested arrays of data. Reduces code redundancy since we could be passed multiple datas point per bar
   for (let i = 0; i < data.length; i++) {
     if (typeof data[i] === "number") {
       data[i] = [data[i]];
@@ -191,6 +200,7 @@ const drawBarChart = function(data, options, element) {
   }
   sortedData = sortedData.sort((a, b) => b - a);
   let highestDataPoint = sortedData[0];
+  let lowestDataPoint = sortedData[sortedData.length - 1];
 
 };
 

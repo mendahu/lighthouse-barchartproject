@@ -2,6 +2,7 @@ html {
   background-color: grey;
 }
 main {
+  width: 100%;
   max-width: 960px;
   margin: auto;
   background-color: black;
