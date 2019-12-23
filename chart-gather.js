@@ -3,7 +3,7 @@ $(document).ready(function() {
   $("#data-submit").attr("onclick", "drawBarChart(gatheredData, gatheredOptions, $(\"#chart-container\"))");
 });
 
-let gatheredData = [[55, 44, 32], 2, 3, [40, 69], 5];
+let gatheredData = [1, [6, 3], 3, 4, 5];
 let gatheredOptions = {
   barSpacing: "wide",
   valuePosition: "centre",

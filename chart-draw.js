@@ -1,5 +1,24 @@
 /********************************************************
 
+Helper funtion that converts data to an array of arrays for simpler code when dealing with multiple variables
+
+********************************************************/
+
+const dataProcessor = function(unProcessedData) {
+
+  let returnedData = unProcessedData;
+  for (let i = 0; i < unProcessedData.length; i++) {
+    if (typeof unProcessedData[i] === "number") {
+      returnedData[i] = [unProcessedData[i]];
+    }
+  }
+
+  return returnedData;
+
+};
+
+/********************************************************
+
 Helper function that processes options for easier use with function that draws chart
 
 ********************************************************/
@@ -68,7 +87,7 @@ const scaleCalculator = function(givenData) {
   };
 
   //Sort the data to determine highest number. Will first reduce any nested arrays for multiple values
-  let sortedData = givenData;
+  let sortedData = [...givenData];
   const dataReducer = (acc, cv) => acc + cv;
   for (let i = 0; i < sortedData.length; i++) {
     sortedData[i] = sortedData[i].reduce(dataReducer);
@@ -139,6 +158,14 @@ const drawBarChart = function(data, options, element) {
 
   //Clears the existing chart, if there is one
   element.empty();
+
+  //Convert data into nested arrays of data. Reduces code redundancy since we could be passed multiple datas point per bar
+  const processedData = dataProcessor(data);
+
+  //This helper function determines a scale for the vertical Y axis based on the data.
+  //Bar charts always start at 0 but the maximum height and ticks are dynamic
+  //The function outputs an array with the ticks we will use to build the chart
+  let yAxisTicks = scaleCalculator(processedData);
 
   //Sets default options to configure the chart
   const defaultOptions = {
@@ -242,7 +269,7 @@ const drawBarChart = function(data, options, element) {
   //Narrow spacing makes the spaces half the width of a bar
   //Even spacing makes the spaces the same width as the bar
   //Wide spacing makes the spaces 150% the width of a bar
-  let widthUnit = (data.length * 2) + ((data.length + 1) * processedOptions.barSpacing);
+  let widthUnit = (processedData.length * 2) + ((processedData.length + 1) * processedOptions.barSpacing);
 
   //Create Bar Chart using Flexboxes
   $figure.append("<div id=\"bar-chart\"></div>");
@@ -261,11 +288,11 @@ const drawBarChart = function(data, options, element) {
   $("#bar-chart").css(barChartCSS);
 
   //Populate bar chart flexbox with columns for bars of data and space between
-  for (let i = 0; i < data.length; i++) {
+  for (let i = 0; i < processedData.length; i++) {
     $("#bar-chart").append("<div id=\"bar-chart-space-" + (i + 1) + "\" class=\"bar-chart-space\"></div>");
     $("#bar-chart").append("<div id=\"bar-chart-data-" + (i + 1) + "\" class=\"bar-chart-data\"></div>");
   }
-  $("#bar-chart").append("<div id=\"bar-chart-space-" + (data.length + 1) + "\" class=\"bar-chart-space\"></div>");
+  $("#bar-chart").append("<div id=\"bar-chart-space-" + (processedData.length + 1) + "\" class=\"bar-chart-space\"></div>");
 
   //Assign size & spacing to bars and spaces based on inputs
   $(".bar-chart-space").css("flex-basis", (processedOptions.barSpacing / widthUnit));
@@ -274,19 +301,34 @@ const drawBarChart = function(data, options, element) {
   $(".bar-chart-space").css("flex-grow", processedOptions.barSpacing);
   $(".bar-chart-data").css("flex-grow", "2");
 
-  //Convert data into nested arrays of data. Reduces code redundancy since we could be passed multiple datas point per bar
-  for (let i = 0; i < data.length; i++) {
-    if (typeof data[i] === "number") {
-      data[i] = [data[i]];
-    }
+  //Create flexboxes inside CSS Grid bar chart to accomodate data
+  let barChartDataCSS = {
+    "display": "flex",
+    "flex-direction": "column-reverse",
+    "flex-wrap": "nowrap",
+    "align-items": "stretch"
+  };
+  $(".bar-chart-data").css(barChartDataCSS);
+
+  console.log(processedData);
+
+  //add data to flexboxes and size & style accordingly
+  for (let i = 0; i < processedData.length; i++) {
+    let barChartDataBarsCSS = {
+      //"flex-grow": (processedData[i][0] / yAxisTicks[yAxisTicks.length - 1]),
+      "flex-basis": ((processedData[i][0] / yAxisTicks[yAxisTicks.length - 1]) * 100) + "%",
+      "background-color": processedOptions.dataColour1
+    };
+    console.log(((processedData[i][0] / yAxisTicks[yAxisTicks.length - 1]) * 100) + "%");
+    let barChartSpaceBarsCSS = {
+      //"flex-grow": (1 - (processedData[i][0] / yAxisTicks[yAxisTicks.length - 1]))
+    };
+    console.log(((1 - (processedData[i][0] / yAxisTicks[yAxisTicks.length - 1])) * 100) + "%");
+    $("#bar-chart-data-" + (i + 1)).append("<div id=\"bar-chart-data-bar-" + (i + 1) + "-vertical-space\" class=\"bar-chart-data-bar-vertical-space\">");
+    $("#bar-chart-data-bar-" + (i + 1) + "-vertical-space").css(barChartSpaceBarsCSS);
+    $("#bar-chart-data-" + (i + 1)).append("<div id=\"bar-chart-data-bar-" + (i + 1) + "\" class=\"bar-chart-data-bar\">");
+    $("#bar-chart-data-bar-" + (i + 1)).css(barChartDataBarsCSS);
   }
-
-  //This helper function determines a scale for the vertical Y axis based on the data.
-  //Bar charts always start at 0 but the maximum height and ticks are dynamic
-  //The function outputs an array with the ticks we will use to build the chart
-  let yAxisTicks = scaleCalculator(data);
-
-  console.log(yAxisTicks);
 
 
 };
