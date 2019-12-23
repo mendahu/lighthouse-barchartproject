@@ -141,14 +141,16 @@ const scaleCalculator = function(givenData) {
   }
   scientificNotation.tickQuantity = Math.round((scientificNotation.yAxisTop / scientificNotation.tickSize));
 
-  //Generate an array of ticks to return
-  let returnedData = [];
+  //Generate an object with array of ticks and significant digits to return
+  let returnedData = {
+    sigDigits: (-scientificNotation.exponent) + 1,
+    values: []
+  };
   for (let i = 0; i <= scientificNotation.tickQuantity; i++) {
-    returnedData.push(i * scientificNotation.tickSize * Math.pow(10, scientificNotation.exponent));
+    returnedData.values.push(i * scientificNotation.tickSize * Math.pow(10, scientificNotation.exponent));
   }
 
-  console.log(scientificNotation);
-  console.log(returnedData);
+
   return returnedData;
 };
 
@@ -334,17 +336,17 @@ const drawBarChart = function(data, options, element) {
   $(".bar-chart-data").css(barChartDataCSS);
 
   console.log(processedData);
-  console.log(yAxisTicks);
+  console.log(yAxisTicks.values);
 
   //add data to flexboxes and size & style accordingly
   for (let i = 0; i < processedData.length; i++) {
     let barChartDataBarsCSS = {
-      "flex-grow": (processedData[i][0] / yAxisTicks[yAxisTicks.length - 1]),
-      "flex-basis": ((processedData[i][0] / yAxisTicks[yAxisTicks.length - 1]) * 100) + "%",
+      "flex-grow": (processedData[i][0] / yAxisTicks.values[yAxisTicks.values.length - 1]),
+      "flex-basis": ((processedData[i][0] / yAxisTicks.values[yAxisTicks.values.length - 1]) * 100) + "%",
       "background-color": processedOptions.dataColour1
     };
     let barChartSpaceBarsCSS = {
-      "flex-grow": (1 - (processedData[i][0] / yAxisTicks[yAxisTicks.length - 1]))
+      "flex-grow": (1 - (processedData[i][0] / yAxisTicks.values[yAxisTicks.values.length - 1]))
     };
     $("#bar-chart-data-" + (i + 1)).append("<div id=\"bar-chart-data-bar-" + (i + 1) + "-vertical-space\" class=\"bar-chart-data-bar-vertical-space\">");
     $("#bar-chart-data-bar-" + (i + 1) + "-vertical-space").css(barChartSpaceBarsCSS);
@@ -368,13 +370,13 @@ const drawBarChart = function(data, options, element) {
   $("#y-axis").css(yAxisCSS);
 
   //Populate Y-Axis with items for each yAxis Tick, add labels, style accordingly
-  for (let i = 1; i < yAxisTicks.length; i++) {
+  for (let i = 1; i < yAxisTicks.values.length; i++) {
     $("#y-axis").append("<div id=\"y-axis-tick-" + i + "\" class=\"y-axis-tick\">");
-    $("#y-axis-tick-" + i).append("<span class=\"y-axis-tick-label\">" + yAxisTicks[13 - i] + "</span>");
+    $("#y-axis-tick-" + i).append("<span class=\"y-axis-tick-label\">" + yAxisTicks.values[13 - i].toFixed(yAxisTicks.sigDigits) + "</span>");
   }
   let yAxisTickCSS = {
     "border-top": "1px solid" + processedOptions.titleColour,
-    "flex-basis": (1 / (yAxisTicks.length - 1)) + "%",
+    "flex-basis": (1 / (yAxisTicks.values.length - 1)) + "%",
     "flex-grow": 1
   };
   $(".y-axis-tick").css(yAxisTickCSS);
