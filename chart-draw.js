@@ -1,5 +1,9 @@
+/********************************************************
 
-//Helper function that processes options for easier use with function that draws chart
+Helper function that processes options for easier use with function that draws chart
+
+********************************************************/
+
 const optionsCleaner = function(unProcessedOptions) {
 
   //First copy the unProcessedOptions to our processing object
@@ -38,15 +42,29 @@ const optionsCleaner = function(unProcessedOptions) {
   return inProcessingOptions;
 };
 
-//Helper function that uses the data provided to determine a dynamic scale for the Y Axis
+/********************************************************
+
+Helper function that uses the data provided to determine a dynamic scale for the Y Axis
+
+********************************************************/
+
 const scaleCalculator = function(givenData) {
 
-  //Create empty object to house scale ticks to be returned
-  let returnedData = [0];
+  //an object to contain scientifici notation data about our data
+  let scientificNotation = {
+    base: 0,
+    exponent: 0,
+    highDataPoint: 0,
+    yAxisTop: 0,
+    tickSize: 0,
+    tickQuantity: 0
+  };
 
-  //Create a more robust rounding function to handle decimals
-  const round = function(value, decimals) {
-    return Number(Math.round(value + "e" + decimals) + "e-" + decimals);
+  //an object to store function data to calculate ticks
+  let parameters = {
+    tickCandidates: [0.1, 0.2, 0.25, 0.5, 1],
+    fewestTicksAllowed: 4,
+    mostTicksAllowed: 12
   };
 
   //Sort the data to determine highest number. Will first reduce any nested arrays for multiple values
@@ -56,44 +74,48 @@ const scaleCalculator = function(givenData) {
     sortedData[i] = sortedData[i].reduce(dataReducer);
   }
   sortedData = sortedData.sort((a, b) => b - a);
-  let highestDataPoint = sortedData[0];
+  let highDataPoint = sortedData[0];
 
-  //Calculate the significant digits of highest data point
-  //Forthe purposes of scale height, the significant digit is the first non-zero digit / 10
-  let decimalPrecision = 0;
-  let decimalString = highestDataPoint.toString().split(".");
-  if (decimalString[1] !== undefined) {
-    let decimals = decimalString[1].split("");
+  //We will convert the highest data point into scientific notation for simpler code
+  //First determine the exponent by locating the position of the first non-zero digit
+  if (highDataPoint <= 0) {
+    scientificNotation.exponent = 0;
+  } else if (highDataPoint < 1) {
+    let decimals = highDataPoint.toString().split(".")[1].split("");
     for (let i = 0; i < decimals.length; i++) {
       if (Number(decimals[i]) !== 0) {
-        decimalPrecision = i + 1;
+        scientificNotation.exponent = -(i + 1);
         break;
       }
     }
   } else {
-    decimalPrecision = 1;
+    scientificNotation.exponent = (highDataPoint.toString().split(".")[0].length) - 1;
   }
 
-  //Calculate how many digits a number is
-  let digits = 0;
-  if (Number(decimalString[0]) > 0) {
-    digits = decimalString[0].length;
+  //Next, determine our scientific high data point by multiplying in the exponent
+  scientificNotation.highDataPoint = highDataPoint * Math.pow(10, -scientificNotation.exponent);
+
+  //Then determine our base by isolating the first number of the high data point
+  scientificNotation.base = Number(scientificNotation.highDataPoint.toString().split(".")[0]);
+
+  //Calculate the tick characteristics for the yAxis
+  //Working up the tick candidates, find the first one that creates an amount of ticks within the threshold set in parameters
+  for (let i = 0; i < parameters.tickCandidates.length; i++) {
+    scientificNotation.yAxisTop = scientificNotation.base + parameters.tickCandidates[i];
+    if ((scientificNotation.yAxisTop > scientificNotation.highDataPoint) && (scientificNotation.yAxisTop / parameters.tickCandidates[i] <= parameters.mostTicksAllowed)) {
+      scientificNotation.tickSize = parameters.tickCandidates[i];
+      scientificNotation.tickQuantity = scientificNotation.yAxisTop / scientificNotation.tickSize;
+      break;
+    }
   }
 
-  //Create the scaleTicks dynamically
-  let scaleTick = 0;
-  if (digits > 1) {
-    scaleTick = Math.round(highestDataPoint * 0.11);
-  } else {
-    scaleTick = round(highestDataPoint * 0.11, decimalPrecision);
-  }
-
-  for (let i = 1; i <= 10;i ++) {
-    returnedData.push(round(scaleTick * i, decimalPrecision));
+  //Generate an array of ticks to return
+  let returnedData = [];
+  for (let i = 0; i <= scientificNotation.tickQuantity; i++) {
+    returnedData.push(i * scientificNotation.tickSize * Math.pow(10, scientificNotation.exponent));
   }
 
   return returnedData;
-
 };
 
 /********************************************************
@@ -252,7 +274,8 @@ const drawBarChart = function(data, options, element) {
   //This helper function determines a scale for the vertical Y axis based on the data.
   //Bar charts always start at 0 but the maximum height and ticks are dynamic
   //The function outputs an array with the 11 ticks we will use to build the chart
-  let yAxisParameters = scaleCalculator(data);
+  let yAxisTicks = scaleCalculator(data);
+
 
 
 };
