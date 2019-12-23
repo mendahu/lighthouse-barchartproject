@@ -3,7 +3,7 @@ $(document).ready(function() {
   $("#data-submit").attr("onclick", "drawBarChart(gatheredData, gatheredOptions, $(\"#chart-container\"))");
 });
 
-let gatheredData = [1, [1, 2], 4, [1, 2, 3], 7, [1, 2, 3, 5]];
+let gatheredData = [1, [1, 1], 3, [1, 1, 2], 5, [1, 2, 1, 2], 7];
 let gatheredOptions = {
   barSpacing: "wide",
   valuePosition: "centre",
@@ -15,12 +15,11 @@ let gatheredOptions = {
 };
 
 /* DEFAULT OPTIONS
-barSpacing: "even",
+const defaultOptions = {
+    barSpacing: "even",
     valueLabelPosition: "top",
     valueLabelColour: "ffffff",
-    dataColour1: "#0000ff",
-    dataColour2: "#ff0000",
-    dataColour3: "#00ff00",
+    dataColours: ["#0000ff","#ff0000","#00ff00"]
     titleVisible: false,
     title: "Please Set A Title",
     titleSize: "Med",
@@ -30,6 +29,7 @@ barSpacing: "even",
     xAxisLabel: "Please Set An X Axis Label",
     yAxisLabelVisible: false,
     yAxisLabel: "Please Set A Y Axis Label"
+  };
 */
 
 const gatherData = function() {

@@ -130,10 +130,7 @@ const scaleCalculator = function(givenData) {
   //Work through tick candidates to find the best fit for the most ticks within limits
   let tickIndex = 1;
   while ((Math.round(scientificNotation.yAxisTop / scientificNotation.tickSize) > parameters.mostTicksAllowed) || (Math.round((scientificNotation.yAxisTop % scientificNotation.tickSize)) !== 0)) {
-    console.log((Math.round(scientificNotation.yAxisTop / scientificNotation.tickSize) >= parameters.mostTicksAllowed));
-    console.log((Math.round((scientificNotation.yAxisTop % scientificNotation.tickSize)) !== 0));
     scientificNotation.tickSize = parameters.tickCandidates[tickIndex];
-    console.log(scientificNotation.tickSize);
     tickIndex++;
     if (parameters.tickCandidates[tickIndex] === undefined) {
       break;
@@ -333,9 +330,6 @@ const drawBarChart = function(data, options, element) {
   };
   $(".bar-chart-data").css(barChartDataCSS);
 
-  console.log(processedData);
-  console.log(yAxisTicks.values);
-
   //add data to flexboxes and size & style accordingly
   for (let i = 0; i < processedData.length; i++) {
     for (let j = 0; j < processedData[i].length; j++) {
@@ -372,7 +366,7 @@ const drawBarChart = function(data, options, element) {
   //Populate Y-Axis with items for each yAxis Tick, add labels, style accordingly
   for (let i = 1; i < yAxisTicks.values.length; i++) {
     $("#y-axis").append("<div id=\"y-axis-tick-" + i + "\" class=\"y-axis-tick\">");
-    $("#y-axis-tick-" + i).append("<span class=\"y-axis-tick-label\">" + yAxisTicks.values[13 - i].toFixed(yAxisTicks.sigDigits) + "</span>");
+    $("#y-axis-tick-" + i).append("<span class=\"y-axis-tick-label\">" + yAxisTicks.values[yAxisTicks.values.length - i].toFixed(yAxisTicks.sigDigits) + "</span>");
   }
   let yAxisTickCSS = {
     "border-top": "1px solid" + processedOptions.titleColour,
