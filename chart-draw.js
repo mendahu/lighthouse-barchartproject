@@ -301,22 +301,23 @@ const drawBarChart = function(data, options, element) {
   };
   $("#x-axis").css(xAxisCSS);
 
-  //Populate bar chart flexbox with columns for bars of data and space between. Also adds labels
+  //Populate bar chart flexbox with columns for bars of data and space between. Also adds x axis value containers and values
   for (let i = 0; i < processedData.length; i++) {
-    $("#bar-chart").append("<div id=\"bar-chart-space-" + (i + 1) + "\" class=\"bar-chart-space\"></div>");
-    $("#x-axis").append("<div id=\"x-axis-space-" + (i + 1) + "\" class=\"x-axis-space\"></div>");
-    $("#bar-chart").append("<div id=\"bar-chart-data-" + (i + 1) + "\" class=\"bar-chart-data\"></div>");
-    $("#x-axis").append("<div id=\"x-axis-data-" + (i + 1) + "\" class=\"x-axis-data\"></div>");
+    $("#bar-chart").append("<div id=\"bar-chart-space-" + (i + 1) + "\" class=\"bar-chart-space space\"></div>");
+    $("#x-axis").append("<div id=\"x-axis-space-" + (i + 1) + "\" class=\"x-axis-space space\"></div>");
+    $("#bar-chart").append("<div id=\"bar-chart-data-" + (i + 1) + "\" class=\"bar-chart-data data\"></div>");
+    $("#x-axis").append("<div id=\"x-axis-data-" + (i + 1) + "\" class=\"x-axis-data data\"></div>");
+    $("#x-axis-data-" + (i + 1)).append("<span id=\"x-axis-data-label-" + (i + 1) + "\" class=\"x-axis-data-label\">" + processedOptions.dataLabels[i] + "</span>");
   }
-  $("#bar-chart").append("<div id=\"bar-chart-space-" + (processedData.length + 1) + "\" class=\"bar-chart-space\"></div>");
-  $("#x-axis").append("<div id=\"x-axis-space-" + (processedData.length + 1) + "\" class=\"x-axis-space\"></div>");
+  $("#bar-chart").append("<div id=\"bar-chart-space-" + (processedData.length + 1) + "\" class=\"bar-chart-space space\"></div>");
+  $("#x-axis").append("<div id=\"x-axis-space-" + (processedData.length + 1) + "\" class=\"x-axis-space space\"></div>");
+  $(".x-axis-data-label").css("color", processedOptions.titleColour);
 
   //Assign size & spacing to bars and spaces based on inputs
-  $(".bar-chart-space").css("flex-basis", (processedOptions.barSpacing / widthUnit));
-  $(".bar-chart-data").css("flex-basis", (2 / widthUnit));
-
-  $(".bar-chart-space").css("flex-grow", processedOptions.barSpacing);
-  $(".bar-chart-data").css("flex-grow", "2");
+  $(".space").css("flex-basis", (processedOptions.barSpacing / widthUnit));
+  $(".data").css("flex-basis", (2 / widthUnit));
+  $(".space").css("flex-grow", processedOptions.barSpacing);
+  $(".data").css("flex-grow", "2");
 
   //Create flexboxes inside CSS Grid bar chart to accomodate data
   let barChartDataCSS = {
