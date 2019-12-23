@@ -179,9 +179,7 @@ const drawBarChart = function(data, options, element) {
     barSpacing: "even",
     valueLabelPosition: "top",
     valueLabelColour: "ffffff",
-    dataColour1: "#0000ff",
-    dataColour2: "#ff0000",
-    dataColour3: "#00ff00",
+    dataColours: ["#231123", "#82204A", "#558C8C", "#E8DB7D", "#EFF7FF"],
     titleVisible: false,
     title: "Please Set A Title",
     titleSize: "Med",
@@ -207,7 +205,7 @@ const drawBarChart = function(data, options, element) {
   //User will have a responsive design and will not have access to these.
   let chartSizes = {
     figureWidth: "100%",
-    axisWidth: "50px",
+    axisWidth: "auto",
     barChartWidth: "1fr",
     barChartHeight: "1fr"
   };
@@ -329,7 +327,7 @@ const drawBarChart = function(data, options, element) {
   //Create flexboxes inside CSS Grid bar chart to accomodate data
   let barChartDataCSS = {
     "display": "flex",
-    "flex-direction": "column",
+    "flex-direction": "column-reverse",
     "flex-wrap": "nowrap",
     "align-items": "stretch"
   };
@@ -340,18 +338,20 @@ const drawBarChart = function(data, options, element) {
 
   //add data to flexboxes and size & style accordingly
   for (let i = 0; i < processedData.length; i++) {
-    let barChartDataBarsCSS = {
-      "flex-grow": (processedData[i][0] / yAxisTicks.values[yAxisTicks.values.length - 1]),
-      "flex-basis": ((processedData[i][0] / yAxisTicks.values[yAxisTicks.values.length - 1]) * 100) + "%",
-      "background-color": processedOptions.dataColour1
-    };
+    for (let j = 0; j < processedData[i].length; j++) {
+      let barChartDataBarsCSS = {
+        "flex-grow": (processedData[i][j] / yAxisTicks.values[yAxisTicks.values.length - 1]),
+        "flex-basis": ((processedData[i][j] / yAxisTicks.values[yAxisTicks.values.length - 1]) * 100) + "%",
+        "background-color": processedOptions.dataColours[j]
+      };
+      $("#bar-chart-data-" + (i + 1)).append("<div id=\"bar-chart-data-bar-" + (i + 1) + "-" + (j + 1) + "\" class=\"bar-chart-data-bar\">");
+      $("#bar-chart-data-bar-" + (i + 1) + "-" + (j + 1)).css(barChartDataBarsCSS);
+    }
     let barChartSpaceBarsCSS = {
       "flex-grow": (1 - (processedData[i][0] / yAxisTicks.values[yAxisTicks.values.length - 1]))
     };
     $("#bar-chart-data-" + (i + 1)).append("<div id=\"bar-chart-data-bar-" + (i + 1) + "-vertical-space\" class=\"bar-chart-data-bar-vertical-space\">");
     $("#bar-chart-data-bar-" + (i + 1) + "-vertical-space").css(barChartSpaceBarsCSS);
-    $("#bar-chart-data-" + (i + 1)).append("<div id=\"bar-chart-data-bar-" + (i + 1) + "\" class=\"bar-chart-data-bar\">");
-    $("#bar-chart-data-bar-" + (i + 1)).css(barChartDataBarsCSS);
   }
 
   //Create the Y-Axis as a nested Flexbox
