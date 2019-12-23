@@ -56,7 +56,7 @@ const scaleCalculator = function(givenData) {
     exponent: 0,
     highDataPoint: 0,
     yAxisTop: 0,
-    tickSize: 0,
+    tickSize: 0.1,
     tickQuantity: 0
   };
 
@@ -100,14 +100,24 @@ const scaleCalculator = function(givenData) {
 
   //Calculate the tick characteristics for the yAxis
   //Working up the tick candidates, find the first one that creates an amount of ticks within the threshold set in parameters
+
   for (let i = 0; i < parameters.tickCandidates.length; i++) {
     scientificNotation.yAxisTop = scientificNotation.base + parameters.tickCandidates[i];
-    if ((scientificNotation.yAxisTop > scientificNotation.highDataPoint) && (scientificNotation.yAxisTop / parameters.tickCandidates[i] <= parameters.mostTicksAllowed)) {
-      scientificNotation.tickSize = parameters.tickCandidates[i];
-      scientificNotation.tickQuantity = scientificNotation.yAxisTop / scientificNotation.tickSize;
+    if (scientificNotation.yAxisTop > scientificNotation.highDataPoint) {
       break;
     }
   }
+
+  //Work through tick candidates to find the best fit for the most ticks within limits
+  let tickIndex = 1;
+  while ((scientificNotation.yAxisTop / scientificNotation.tickSize > parameters.mostTicksAllowed) || ((scientificNotation.yAxisTop % scientificNotation.tickSize) !== 0)) {
+    scientificNotation.tickSize = parameters.tickCandidates[tickIndex];
+    tickIndex++;
+    if (parameters.tickCandidates[tickIndex] === undefined) {
+      break;
+    }
+  }
+  scientificNotation.tickQuantity = (scientificNotation.yAxisTop / scientificNotation.tickSize);
 
   //Generate an array of ticks to return
   let returnedData = [];
@@ -273,9 +283,10 @@ const drawBarChart = function(data, options, element) {
 
   //This helper function determines a scale for the vertical Y axis based on the data.
   //Bar charts always start at 0 but the maximum height and ticks are dynamic
-  //The function outputs an array with the 11 ticks we will use to build the chart
+  //The function outputs an array with the ticks we will use to build the chart
   let yAxisTicks = scaleCalculator(data);
 
+  console.log(yAxisTicks);
 
 
 };
