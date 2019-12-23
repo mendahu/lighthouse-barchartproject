@@ -3,7 +3,7 @@ $(document).ready(function() {
   $("#data-submit").attr("onclick", "drawBarChart(gatheredData, gatheredOptions, $(\"#chart-container\"))");
 });
 
-let gatheredData = [1, [6, 3], 3, 4, 5];
+let gatheredData = [1, [1, 2], 4, [1, 2, 3], 7, [1, 2, 3, 5]];
 let gatheredOptions = {
   barSpacing: "wide",
   valuePosition: "centre",
@@ -11,7 +11,7 @@ let gatheredOptions = {
   title: "Test Title",
   xAxisLabelVisible: true,
   yAxisLabelVisible: true,
-  dataLabels: [1, 2, 3, 4, 5]
+  dataLabels: [1, 2, 3, 4, 5, 6, 7, 8]
 };
 
 /* DEFAULT OPTIONS

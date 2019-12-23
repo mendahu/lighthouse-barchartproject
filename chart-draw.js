@@ -129,14 +129,17 @@ const scaleCalculator = function(givenData) {
 
   //Work through tick candidates to find the best fit for the most ticks within limits
   let tickIndex = 1;
-  while ((scientificNotation.yAxisTop / scientificNotation.tickSize > parameters.mostTicksAllowed) || ((scientificNotation.yAxisTop % scientificNotation.tickSize) !== 0)) {
+  while ((Math.round(scientificNotation.yAxisTop / scientificNotation.tickSize) > parameters.mostTicksAllowed) || (Math.round((scientificNotation.yAxisTop % scientificNotation.tickSize)) !== 0)) {
+    console.log((Math.round(scientificNotation.yAxisTop / scientificNotation.tickSize) >= parameters.mostTicksAllowed));
+    console.log((Math.round((scientificNotation.yAxisTop % scientificNotation.tickSize)) !== 0));
     scientificNotation.tickSize = parameters.tickCandidates[tickIndex];
+    console.log(scientificNotation.tickSize);
     tickIndex++;
     if (parameters.tickCandidates[tickIndex] === undefined) {
       break;
     }
   }
-  scientificNotation.tickQuantity = (scientificNotation.yAxisTop / scientificNotation.tickSize);
+  scientificNotation.tickQuantity = Math.round((scientificNotation.yAxisTop / scientificNotation.tickSize));
 
   //Generate an array of ticks to return
   let returnedData = [];
@@ -144,6 +147,8 @@ const scaleCalculator = function(givenData) {
     returnedData.push(i * scientificNotation.tickSize * Math.pow(10, scientificNotation.exponent));
   }
 
+  console.log(scientificNotation);
+  console.log(returnedData);
   return returnedData;
 };
 
@@ -329,6 +334,7 @@ const drawBarChart = function(data, options, element) {
   $(".bar-chart-data").css(barChartDataCSS);
 
   console.log(processedData);
+  console.log(yAxisTicks);
 
   //add data to flexboxes and size & style accordingly
   for (let i = 0; i < processedData.length; i++) {
