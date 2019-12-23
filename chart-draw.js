@@ -287,12 +287,29 @@ const drawBarChart = function(data, options, element) {
   };
   $("#bar-chart").css(barChartCSS);
 
-  //Populate bar chart flexbox with columns for bars of data and space between
+  //Create X-Axis data labels using Flexbox
+  $figure.append("<div id=\"x-axis\"></div>");
+  let xAxisCSS = {
+    "display": "flex",
+    "flex-wrap": "nowrap",
+    "justify-content": "space-evenly",
+    "align-items": "stretch",
+    "grid-column-start": "bar-chart-left",
+    "grid-column-end": "bar-chart-right",
+    "grid-row-start": "x-axis-start",
+    "grid-row-end": "x-axis-end"
+  };
+  $("#x-axis").css(xAxisCSS);
+
+  //Populate bar chart flexbox with columns for bars of data and space between. Also adds labels
   for (let i = 0; i < processedData.length; i++) {
     $("#bar-chart").append("<div id=\"bar-chart-space-" + (i + 1) + "\" class=\"bar-chart-space\"></div>");
+    $("#x-axis").append("<div id=\"x-axis-space-" + (i + 1) + "\" class=\"x-axis-space\"></div>");
     $("#bar-chart").append("<div id=\"bar-chart-data-" + (i + 1) + "\" class=\"bar-chart-data\"></div>");
+    $("#x-axis").append("<div id=\"x-axis-data-" + (i + 1) + "\" class=\"x-axis-data\"></div>");
   }
   $("#bar-chart").append("<div id=\"bar-chart-space-" + (processedData.length + 1) + "\" class=\"bar-chart-space\"></div>");
+  $("#x-axis").append("<div id=\"x-axis-space-" + (processedData.length + 1) + "\" class=\"x-axis-space\"></div>");
 
   //Assign size & spacing to bars and spaces based on inputs
   $(".bar-chart-space").css("flex-basis", (processedOptions.barSpacing / widthUnit));
@@ -304,7 +321,7 @@ const drawBarChart = function(data, options, element) {
   //Create flexboxes inside CSS Grid bar chart to accomodate data
   let barChartDataCSS = {
     "display": "flex",
-    "flex-direction": "column-reverse",
+    "flex-direction": "column",
     "flex-wrap": "nowrap",
     "align-items": "stretch"
   };
@@ -315,15 +332,13 @@ const drawBarChart = function(data, options, element) {
   //add data to flexboxes and size & style accordingly
   for (let i = 0; i < processedData.length; i++) {
     let barChartDataBarsCSS = {
-      //"flex-grow": (processedData[i][0] / yAxisTicks[yAxisTicks.length - 1]),
+      "flex-grow": (processedData[i][0] / yAxisTicks[yAxisTicks.length - 1]),
       "flex-basis": ((processedData[i][0] / yAxisTicks[yAxisTicks.length - 1]) * 100) + "%",
       "background-color": processedOptions.dataColour1
     };
-    console.log(((processedData[i][0] / yAxisTicks[yAxisTicks.length - 1]) * 100) + "%");
     let barChartSpaceBarsCSS = {
-      //"flex-grow": (1 - (processedData[i][0] / yAxisTicks[yAxisTicks.length - 1]))
+      "flex-grow": (1 - (processedData[i][0] / yAxisTicks[yAxisTicks.length - 1]))
     };
-    console.log(((1 - (processedData[i][0] / yAxisTicks[yAxisTicks.length - 1])) * 100) + "%");
     $("#bar-chart-data-" + (i + 1)).append("<div id=\"bar-chart-data-bar-" + (i + 1) + "-vertical-space\" class=\"bar-chart-data-bar-vertical-space\">");
     $("#bar-chart-data-bar-" + (i + 1) + "-vertical-space").css(barChartSpaceBarsCSS);
     $("#bar-chart-data-" + (i + 1)).append("<div id=\"bar-chart-data-bar-" + (i + 1) + "\" class=\"bar-chart-data-bar\">");

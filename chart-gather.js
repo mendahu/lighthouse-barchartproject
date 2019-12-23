@@ -10,7 +10,8 @@ let gatheredOptions = {
   titleVisible: true,
   title: "Test Title",
   xAxisLabelVisible: true,
-  yAxisLabelVisible: true
+  yAxisLabelVisible: true,
+  dataLabels: [1, 2, 3, 4, 5]
 };
 
 /* DEFAULT OPTIONS
