@@ -352,6 +352,36 @@ const drawBarChart = function(data, options, element) {
     $("#bar-chart-data-bar-" + (i + 1)).css(barChartDataBarsCSS);
   }
 
+  //Create the Y-Axis as a nested Flexbox
+  $figure.append("<div id=\"y-axis\"></div>");
+  let yAxisCSS = {
+    "display": "flex",
+    "flex-wrap": "nowrap",
+    "flex-direction": "column",
+    "justify-content": "space-evenly",
+    "align-items": "stretch",
+    "grid-column-start": "y-axis-start",
+    "grid-column-end": "y-axis-end",
+    "grid-row-start": "bar-chart-top",
+    "grid-row-end": "bar-chart-bottom"
+  };
+  $("#y-axis").css(yAxisCSS);
+
+  //Populate Y-Axis with items for each yAxis Tick, add labels, style accordingly
+  for (let i = 1; i < yAxisTicks.length; i++) {
+    $("#y-axis").append("<div id=\"y-axis-tick-" + i + "\" class=\"y-axis-tick\">");
+    $("#y-axis-tick-" + i).append("<span class=\"y-axis-tick-label\">" + yAxisTicks[13 - i] + "</span>");
+  }
+  let yAxisTickCSS = {
+    "border-top": "1px solid" + processedOptions.titleColour,
+    "flex-basis": (1 / (yAxisTicks.length - 1)) + "%",
+    "flex-grow": 1
+  };
+  $(".y-axis-tick").css(yAxisTickCSS);
+  let yAxisTickLabelCSS = {
+    "color": processedOptions.titleColour
+  };
+  $(".y-axis-tick-label").css(yAxisTickLabelCSS);
 
 };
 
