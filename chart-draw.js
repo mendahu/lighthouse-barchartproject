@@ -122,21 +122,34 @@ const scaleCalculator = function(givenData) {
 
   for (let i = 0; i < parameters.tickCandidates.length; i++) {
     scientificNotation.yAxisTop = scientificNotation.base + parameters.tickCandidates[i];
+    console.log("The top y Axis Mark selected after " + [i + 1] + " check is: " + scientificNotation.yAxisTop);
     if (scientificNotation.yAxisTop > scientificNotation.highDataPoint) {
       break;
     }
   }
 
+  console.log("\nThe minimum top Y Axis value selected after a check against highest value is: " + scientificNotation.yAxisTop + "\n ");
+
+
   //Work through tick candidates to find the best fit for the most ticks within limits
   let tickIndex = 1;
-  while ((Math.round(scientificNotation.yAxisTop / scientificNotation.tickSize) > parameters.mostTicksAllowed) || (Math.round((scientificNotation.yAxisTop % scientificNotation.tickSize)) !== 0)) {
+  console.log("The starting y Axis tick mark is: " + scientificNotation.tickSize);
+  while ((Math.round(scientificNotation.yAxisTop / scientificNotation.tickSize) > parameters.mostTicksAllowed) || (Math.round(scientificNotation.yAxisTop % scientificNotation.tickSize) !== 0)) {
+    console.log("Check " + tickIndex + ". Y Axis Top Value / tick Size is more than the max ticks allowed: " + (Math.round(scientificNotation.yAxisTop / scientificNotation.tickSize) > parameters.mostTicksAllowed) + "\n " + Math.round(scientificNotation.yAxisTop / scientificNotation.tickSize) + " and " + parameters.mostTicksAllowed);
+    console.log("Check " + tickIndex + ". Y Axis Top Modulo tick Size is not 0: " + (Math.round((scientificNotation.yAxisTop % scientificNotation.tickSize)) !== 0) + "\n " + scientificNotation.yAxisTop + " and " + scientificNotation.tickSize);
     scientificNotation.tickSize = parameters.tickCandidates[tickIndex];
+    console.log("The y Axis tick Mark selected after " + [tickIndex] + " check is: " + scientificNotation.tickSize);
     tickIndex++;
+    if (scientificNotation.base + scientificNotation.tickSize > scientificNotation.yAxisTop) {
+      scientificNotation.yAxisTop = scientificNotation.base + scientificNotation.tickSize;
+    }
     if (parameters.tickCandidates[tickIndex] === undefined) {
       break;
     }
   }
   scientificNotation.tickQuantity = Math.round((scientificNotation.yAxisTop / scientificNotation.tickSize));
+
+  console.log("The top y Axis Mark selected after second loop is: " + scientificNotation.yAxisTop);
 
   //Generate an object with array of ticks and significant digits to return
   let returnedData = {
@@ -147,6 +160,8 @@ const scaleCalculator = function(givenData) {
     returnedData.values.push(i * scientificNotation.tickSize * Math.pow(10, scientificNotation.exponent));
   }
 
+  console.log("Y Axis Calculator Output is:");
+  console.log(scientificNotation);
 
   return returnedData;
 };

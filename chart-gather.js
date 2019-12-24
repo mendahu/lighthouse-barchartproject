@@ -49,7 +49,8 @@ const gatherData = function() {
   //Sets value for where the chart will live
   let $chartContainer = $("#chart-container");
 
-  console.log(sampleData[$sampleDataset][0]);
+  console.log("Selected sample dataset is " + $sampleDataset + ".\nIts values are " + sampleData[$sampleDataset][0]);
+  console.log("Selected sample dataset options are:");
   console.log(sampleData[$sampleDataset][1]);
 
   //draws the chart
