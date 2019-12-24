@@ -7,7 +7,7 @@ $(document).ready(function() {
 let testData = [1, [1, 1], 3, [1, 1, 2], 5, [1, 2, 1, 2], 7];
 let testOptions = {
   barSpacing: "even",
-  valuePosition: "centre",
+  valueLabelPosition: "middle",
   titleVisible: true,
   title: "Test Title",
   titleSize: "large",
@@ -15,12 +15,14 @@ let testOptions = {
   xAxisLabel: "Test X Axis Label",
   yAxisLabelVisible: true,
   yAxisLabel: "Test Y Axis Label",
-  dataLabels: [1, 2, 3, 4, 5, 6, 7, 8]
+  dataLabels: [1, 2, 3, 4, 5, 6, 7, 8],
+  dataLabelPosition: "middle"
 };
 
 //A sample dataset for demoing
 let sampleDataLaunches = [8, 31, 6, 2, 21, 27];
 let sampleOptionsLaunches = {
+  theme: "dark",
   barSpacing: "even",
   valueLabelPosition: "top",
   valueLabelColour: "ffffff",
@@ -34,7 +36,8 @@ let sampleOptionsLaunches = {
   xAxisLabel: "Countries",
   dataLabels: ["Europe", "China", "India", "Japan", "Russia", "United States"],
   yAxisLabelVisible: true,
-  yAxisLabel: "# of Launches"
+  yAxisLabel: "# of Launches",
+  dataLabelPosition: "top"
 };
 
 let sampleData = {

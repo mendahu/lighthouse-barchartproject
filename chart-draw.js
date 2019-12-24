@@ -93,6 +93,39 @@ const optionsCleaner = function(unProcessedOptions) {
     inProcessingOptions.dataColours = colourSchemes.blue;
   }
 
+  //Takes the dataLabelPosition string and turns it into Flexbox Justify Values
+  switch (unProcessedOptions.dataLabelPosition) {
+  case "top":
+    inProcessingOptions.dataLabelPosition = "flex-start";
+    break;
+  case "middle":
+    inProcessingOptions.dataLabelPosition = "center";
+    break;
+  case "bottom":
+    inProcessingOptions.dataLabelPosition = "flex-end";
+    break;
+  case "off":
+    inProcessingOptions.dataLabelVisibility = "hidden";
+    break;
+  default:
+    inProcessingOptions.dataLabelPosition = "flex-start";
+  }
+  //Takes the theme and sets the background and text colours
+  switch (unProcessedOptions.theme) {
+  case "light":
+    inProcessingOptions.textColour = "#000000";
+    inProcessingOptions.backgroundColour = "#FFFFFF";
+    break;
+  case "dark":
+    inProcessingOptions.textColour = "#FFFFFF";
+    inProcessingOptions.backgroundColour = "#000000";
+    break;
+  default:
+    inProcessingOptions.textColour = "#000000";
+    inProcessingOptions.backgroundColour = "#FFFFFF";
+    break;
+  }
+
   return inProcessingOptions;
 };
 
@@ -224,19 +257,24 @@ const drawBarChart = function(data, options, element) {
 
   //Sets default options to configure the chart
   const defaultOptions = {
+    theme: "light",
+    backgroundColour: "#ffffff",
+    textColour: "#000000",
+
     barSpacing: "even",
+
     valueLabelPosition: "top",
     valueLabelColour: "ffffff",
     dataColours: colourSchemes.blue,
     titleVisible: false,
     title: "Please Set A Title",
     titleSize: "med",
-    titleColour: "#000000",
-    backgroundColour: "#ffffff",
     xAxisLabelVisible: false,
     xAxisLabel: "Please Set An X Axis Label",
     yAxisLabelVisible: false,
-    yAxisLabel: "Please Set A Y Axis Label"
+    yAxisLabel: "Please Set A Y Axis Label",
+    dataLabelPosition: "top",
+    dataLabelVisibility: "visible"
   };
 
   //processedOptions is an amalgamation of the user inputs for options and the defaults to give the function its end results
@@ -283,7 +321,7 @@ const drawBarChart = function(data, options, element) {
   if (processedOptions.titleVisible === true) {
     $figure.append("<h2 id=\"chart-title\">" + processedOptions.title + "</h2>");
     let chartTitleCSS = {
-      "color": processedOptions.titleColour,
+      "color": processedOptions.textColour,
       "font-size": processedOptions.titleSize,
       "grid-column-start": "bar-chart-left",
       "grid-column-end": "bar-chart-right",
@@ -298,7 +336,7 @@ const drawBarChart = function(data, options, element) {
   if (processedOptions.xAxisLabelVisible === true) {
     $figure.append("<span id=\"x-axis-label\">" + processedOptions.xAxisLabel + "</span>");
     let xAxisCSS = {
-      "color": processedOptions.titleColour,
+      "color": processedOptions.textColour,
       "grid-column-start": "bar-chart-left",
       "grid-column-end": "bar-chart-right",
       "grid-row-start": "x-axis-label-start",
@@ -312,7 +350,7 @@ const drawBarChart = function(data, options, element) {
   if (processedOptions.yAxisLabelVisible === true) {
     $figure.append("<span id=\"y-axis-label\">" + processedOptions.yAxisLabel + "</span>");
     let yAxisCSS = {
-      "color": processedOptions.titleColour,
+      "color": processedOptions.textColour,
       "display": "block",
       "writing-mode": "tb-rl",
       "transform": "rotate(180deg)",
@@ -342,8 +380,8 @@ const drawBarChart = function(data, options, element) {
     "grid-column-end": "bar-chart-right",
     "grid-row-start": "bar-chart-top",
     "grid-row-end": "bar-chart-bottom",
-    "border-left": "2px solid " + processedOptions.titleColour,
-    "border-bottom": "2px solid " + processedOptions.titleColour
+    "border-left": "2px solid " + processedOptions.textColour,
+    "border-bottom": "2px solid " + processedOptions.textColour
   };
   $("#bar-chart").css(barChartCSS);
 
@@ -372,15 +410,15 @@ const drawBarChart = function(data, options, element) {
   $("#bar-chart").append("<div id=\"bar-chart-space-" + (processedData.length + 1) + "\" class=\"bar-chart-space space\"></div>");
   $("#x-axis").append("<div id=\"x-axis-space-" + (processedData.length + 1) + "\" class=\"x-axis-space space\"></div>");
 
+  //Styles X axis labels
   let xAxisDataCSS = {
     "display": "flex",
     "flex-wrap": "nowrap",
     "justify-content": "center"
   };
   $(".x-axis-data").css(xAxisDataCSS);
-
   let xAxisDataLabelCSS = {
-    "color": processedOptions.titleColour,
+    "color": processedOptions.textColour,
     "text-align": "center"
   };
   $(".x-axis-data-label").css(xAxisDataLabelCSS);
@@ -405,13 +443,23 @@ const drawBarChart = function(data, options, element) {
     for (let j = 0; j < processedData[i].length; j++) {
       let barChartDataBarsCSS = {
         "flex-basis": ((processedData[i][j] / yAxisTicks.values[yAxisTicks.values.length - 1]) * 100) + "%",
-        "background-color": processedOptions.dataColours[j]
+        "background-color": processedOptions.dataColours[j],
+        "display": "flex",
+        "flex-wrap": "nowrap",
+        "flex-direction": "column",
+        "justify-content": processedOptions.dataLabelPosition
       };
       $("#bar-chart-data-" + (i + 1)).append("<div id=\"bar-chart-data-bar-" + (i + 1) + "-" + (j + 1) + "\" class=\"bar-chart-data-bar\">");
+      $("#bar-chart-data-bar-" + (i + 1) + "-" + (j + 1)).append("<span id=\"bar-chart-data-bar-" + (i + 1) + "-" + (j + 1) + "-data-label\" class=\"bar-chart-data-bar-data-label\">" + processedData[i][j] + "</span>");
       $("#bar-chart-data-bar-" + (i + 1) + "-" + (j + 1)).css(barChartDataBarsCSS);
     }
     $("#bar-chart-data-" + (i + 1)).append("<div id=\"bar-chart-data-bar-" + (i + 1) + "-vertical-space\" class=\"bar-chart-data-bar-vertical-space\">");
   }
+  let barChartDataBarDataLabelCSS = {
+    "text-align": "center",
+    "visibility": processedOptions.dataLabelVisibility
+  };
+  $(".bar-chart-data-bar-data-label").css(barChartDataBarDataLabelCSS);
 
   //Create the Y-Axis as a nested Flexbox
   $figure.append("<div id=\"y-axis\"></div>");
@@ -434,13 +482,13 @@ const drawBarChart = function(data, options, element) {
     $("#y-axis-tick-" + i).append("<span class=\"y-axis-tick-label\">" + yAxisTicks.values[yAxisTicks.values.length - i].toFixed(yAxisTicks.sigDigits) + "</span>");
   }
   let yAxisTickCSS = {
-    "border-top": "1px solid" + processedOptions.titleColour,
+    "border-top": "1px solid" + processedOptions.textColour,
     "flex-basis": (1 / (yAxisTicks.values.length - 1)) + "%",
     "flex-grow": 1
   };
   $(".y-axis-tick").css(yAxisTickCSS);
   let yAxisTickLabelCSS = {
-    "color": processedOptions.titleColour
+    "color": processedOptions.textColour
   };
   $(".y-axis-tick-label").css(yAxisTickLabelCSS);
 
