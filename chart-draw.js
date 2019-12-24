@@ -1,3 +1,14 @@
+
+//Sets six default colour schemes to select from
+const colourSchemes = {
+  blue: ["#071DBF", "#25283D", "#39438E", "#98A2EA", "#CED2EF"],
+  red: ["#A31621", "#F7BEC3", "#5E040C", "#8C1E27", "#DB2332"],
+  green: ["#00633D", "#356050", "#6A8C7F", "#D8FFF0", "#30E8A1"],
+  yellow: ["#E8E537", "#74773B", "#C6C435", "#5B5B40", "#F7F7EA"],
+  purple: ["#482372", "#663F93", "#9166C1", "#AA84D6", "#CDB3E2"],
+  orange: ["#D36135", "#AF7D69", "#EDC7B8", "#E58B67", "#0A0401"]
+};
+
 /********************************************************
 
 Helper funtion that converts data to an array of arrays for simpler code when dealing with multiple variables
@@ -56,6 +67,30 @@ const optionsCleaner = function(unProcessedOptions) {
     break;
   default:
     inProcessingOptions.titleSize = "100%";
+  }
+
+  //Takes the colour scheme option string and sets it to appropriate colour object property
+  switch (unProcessedOptions.dataColours) {
+  case "red":
+    inProcessingOptions.dataColours = colourSchemes.red;
+    break;
+  case "blue":
+    inProcessingOptions.dataColours = colourSchemes.blue;
+    break;
+  case "green":
+    inProcessingOptions.dataColours = colourSchemes.green;
+    break;
+  case "yellow":
+    inProcessingOptions.dataColours = colourSchemes.yellow;
+    break;
+  case "purple":
+    inProcessingOptions.dataColours = colourSchemes.purple;
+    break;
+  case "orange":
+    inProcessingOptions.dataColours = colourSchemes.orange;
+    break;
+  default:
+    inProcessingOptions.dataColours = colourSchemes.blue;
   }
 
   return inProcessingOptions;
@@ -186,12 +221,13 @@ const drawBarChart = function(data, options, element) {
   //The function outputs an array with the ticks we will use to build the chart
   let yAxisTicks = scaleCalculator(processedData);
 
+
   //Sets default options to configure the chart
   const defaultOptions = {
     barSpacing: "even",
     valueLabelPosition: "top",
     valueLabelColour: "ffffff",
-    dataColours: ["#231123", "#82204A", "#558C8C", "#E8DB7D", "#EFF7FF"],
+    dataColours: colourSchemes.blue,
     titleVisible: false,
     title: "Please Set A Title",
     titleSize: "med",
@@ -216,7 +252,8 @@ const drawBarChart = function(data, options, element) {
   //All the chart sizing and labels is contained in this object for easy manipulation by API developper.
   //User will have a responsive design and will not have access to these.
   let chartSizes = {
-    figureWidth: "50vw",
+    figureHeight: $figure.width(),
+    figureWidth: "100%",
     axisWidth: "auto",
     barChartWidth: "1fr",
     barChartHeight: "1fr"
@@ -227,7 +264,7 @@ const drawBarChart = function(data, options, element) {
     "display": "grid",
     "width": chartSizes.figureWidth,
     "max-width": "100%",
-    "height": chartSizes.figureWidth,
+    "height": chartSizes.figureHeight,
     "max-height": "60vh",
     "background-color": processedOptions.backgroundColour
   };
@@ -251,7 +288,8 @@ const drawBarChart = function(data, options, element) {
       "grid-column-start": "bar-chart-left",
       "grid-column-end": "bar-chart-right",
       "grid-row-start": "title-start",
-      "grid-row-end": "title-end"
+      "grid-row-end": "title-end",
+      "margin": "auto"
     };
     $("#chart-title").css(chartTitleCSS);
   }
@@ -264,7 +302,8 @@ const drawBarChart = function(data, options, element) {
       "grid-column-start": "bar-chart-left",
       "grid-column-end": "bar-chart-right",
       "grid-row-start": "x-axis-label-start",
-      "grid-row-end": "x-axis-label-end"
+      "grid-row-end": "x-axis-label-end",
+      "margin": "auto"
     };
     $("#x-axis-label").css(xAxisCSS);
   }
@@ -280,7 +319,8 @@ const drawBarChart = function(data, options, element) {
       "grid-column-start": "y-axis-label-start",
       "grid-column-end": "y-axis-label-end",
       "grid-row-start": "bar-chart-top",
-      "grid-row-end": "bar-chart-bottom"
+      "grid-row-end": "bar-chart-bottom",
+      "margin": "auto"
     };
     $("#y-axis-label").css(yAxisCSS);
   }
