@@ -1,10 +1,11 @@
 $(document).ready(function() {
   //Adds the onclick listener to the generate button.
-  $("#data-submit").attr("onclick", "drawBarChart(gatheredData, gatheredOptions, $(\"#chart-container\"))");
+  $("#data-submit").attr("onclick", "gatherData()");
 });
 
-let gatheredData = [1, [1, 1], 3, [1, 1, 2], 5, [1, 2, 1, 2], 7];
-let gatheredOptions = {
+//Sets a dataset for testing and QA
+let testData = [1, [1, 1], 3, [1, 1, 2], 5, [1, 2, 1, 2], 7];
+let testOptions = {
   barSpacing: "even",
   valuePosition: "centre",
   titleVisible: true,
@@ -17,24 +18,40 @@ let gatheredOptions = {
   dataLabels: [1, 2, 3, 4, 5, 6, 7, 8]
 };
 
-/* DEFAULT OPTIONS
-const defaultOptions = {
-    barSpacing: "even",
-    valueLabelPosition: "top",
-    valueLabelColour: "ffffff",
-    dataColours: ["#0000ff","#ff0000","#00ff00"]
-    titleVisible: false,
-    title: "Please Set A Title",
-    titleSize: "Med",
-    titleColour: "#000000",
-    backgroundColour: "#ffffff",
-    xAxisLabelVisible: false,
-    xAxisLabel: "Please Set An X Axis Label",
-    yAxisLabelVisible: false,
-    yAxisLabel: "Please Set A Y Axis Label"
-  };
-*/
+//A sample dataset for demoing
+let sampleDataLaunches = [8, 31, 6, 2, 21, 27];
+let sampleOptionsLaunches = {
+  barSpacing: "even",
+  valueLabelPosition: "top",
+  valueLabelColour: "ffffff",
+  dataColours: ["#0000ff", "#ff0000", "#00ff00"],
+  titleVisible: false,
+  title: "Orbital Launches by Country, 2019",
+  titleSize: "large",
+  titleColour: "#000000",
+  backgroundColour: "#ffffff",
+  xAxisLabelVisible: true,
+  xAxisLabel: "Countries",
+  dataLabels: ["Europe", "China", "India", "Japan", "Russia", "United States"],
+  yAxisLabelVisible: true,
+  yAxisLabel: "# of Launches"
+};
+
+let sampleData = {
+  testing: [testData, testOptions],
+  sampleLaunches: [sampleDataLaunches, sampleOptionsLaunches]
+};
 
 const gatherData = function() {
-  //
+  //Adds a fetcher for sample data
+  let $sampleDataset = $("#sample-data-selector").val();
+
+  //Sets value for where the chart will live
+  let $chartContainer = $("#chart-container");
+
+  console.log(sampleData[$sampleDataset][0]);
+  console.log(sampleData[$sampleDataset][1]);
+
+  //draws the chart
+  drawBarChart(sampleData[$sampleDataset][0], sampleData[$sampleDataset][1], $chartContainer);
 };

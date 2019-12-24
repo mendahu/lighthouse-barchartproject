@@ -179,7 +179,7 @@ const drawBarChart = function(data, options, element) {
     dataColours: ["#231123", "#82204A", "#558C8C", "#E8DB7D", "#EFF7FF"],
     titleVisible: false,
     title: "Please Set A Title",
-    titleSize: "Med",
+    titleSize: "med",
     titleColour: "#000000",
     backgroundColour: "#ffffff",
     xAxisLabelVisible: false,
