@@ -371,7 +371,19 @@ const drawBarChart = function(data, options, element) {
   }
   $("#bar-chart").append("<div id=\"bar-chart-space-" + (processedData.length + 1) + "\" class=\"bar-chart-space space\"></div>");
   $("#x-axis").append("<div id=\"x-axis-space-" + (processedData.length + 1) + "\" class=\"x-axis-space space\"></div>");
-  $(".x-axis-data-label").css("color", processedOptions.titleColour);
+
+  let xAxisDataCSS = {
+    "display": "flex",
+    "flex-wrap": "nowrap",
+    "justify-content": "center"
+  };
+  $(".x-axis-data").css(xAxisDataCSS);
+
+  let xAxisDataLabelCSS = {
+    "color": processedOptions.titleColour,
+    "text-align": "center"
+  };
+  $(".x-axis-data-label").css(xAxisDataLabelCSS);
 
   //Assign size & spacing to bars and spaces based on inputs
   $(".space").css("flex-basis", (processedOptions.barSpacing / widthUnit));
