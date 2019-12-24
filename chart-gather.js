@@ -5,12 +5,15 @@ $(document).ready(function() {
 
 let gatheredData = [1, [1, 1], 3, [1, 1, 2], 5, [1, 2, 1, 2], 7];
 let gatheredOptions = {
-  barSpacing: "wide",
+  barSpacing: "even",
   valuePosition: "centre",
   titleVisible: true,
   title: "Test Title",
+  titleSize: "large",
   xAxisLabelVisible: true,
+  xAxisLabel: "Test X Axis Label",
   yAxisLabelVisible: true,
+  yAxisLabel: "Test Y Axis Label",
   dataLabels: [1, 2, 3, 4, 5, 6, 7, 8]
 };
 

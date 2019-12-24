@@ -46,16 +46,16 @@ const optionsCleaner = function(unProcessedOptions) {
   //Takes the titleSize option string and converts it from human readable to an appropropriate multipler that we can use later
   switch (unProcessedOptions.titleSize) {
   case "small":
-    inProcessingOptions.titleSize = "0.8em";
+    inProcessingOptions.titleSize = "75%";
     break;
   case "med":
-    inProcessingOptions.titleSize = "1em";
+    inProcessingOptions.titleSize = "100%";
     break;
   case "large":
-    inProcessingOptions.titleSize = "1.2em";
+    inProcessingOptions.titleSize = "150%";
     break;
   default:
-    inProcessingOptions.titleSize = "1em";
+    inProcessingOptions.titleSize = "100%";
   }
 
   return inProcessingOptions;
@@ -201,7 +201,7 @@ const drawBarChart = function(data, options, element) {
   //All the chart sizing and labels is contained in this object for easy manipulation by API developper.
   //User will have a responsive design and will not have access to these.
   let chartSizes = {
-    figureWidth: "100%",
+    figureWidth: "50vw",
     axisWidth: "auto",
     barChartWidth: "1fr",
     barChartHeight: "1fr"
@@ -211,6 +211,9 @@ const drawBarChart = function(data, options, element) {
   let figureCSS = {
     "display": "grid",
     "width": chartSizes.figureWidth,
+    "max-width": "100%",
+    "height": chartSizes.figureWidth,
+    "max-height": "60vh",
     "background-color": processedOptions.backgroundColour
   };
   $figure.css(figureCSS);
@@ -334,18 +337,13 @@ const drawBarChart = function(data, options, element) {
   for (let i = 0; i < processedData.length; i++) {
     for (let j = 0; j < processedData[i].length; j++) {
       let barChartDataBarsCSS = {
-        "flex-grow": (processedData[i][j] / yAxisTicks.values[yAxisTicks.values.length - 1]),
         "flex-basis": ((processedData[i][j] / yAxisTicks.values[yAxisTicks.values.length - 1]) * 100) + "%",
         "background-color": processedOptions.dataColours[j]
       };
       $("#bar-chart-data-" + (i + 1)).append("<div id=\"bar-chart-data-bar-" + (i + 1) + "-" + (j + 1) + "\" class=\"bar-chart-data-bar\">");
       $("#bar-chart-data-bar-" + (i + 1) + "-" + (j + 1)).css(barChartDataBarsCSS);
     }
-    let barChartSpaceBarsCSS = {
-      "flex-grow": (1 - (processedData[i][0] / yAxisTicks.values[yAxisTicks.values.length - 1]))
-    };
     $("#bar-chart-data-" + (i + 1)).append("<div id=\"bar-chart-data-bar-" + (i + 1) + "-vertical-space\" class=\"bar-chart-data-bar-vertical-space\">");
-    $("#bar-chart-data-bar-" + (i + 1) + "-vertical-space").css(barChartSpaceBarsCSS);
   }
 
   //Create the Y-Axis as a nested Flexbox
@@ -378,6 +376,8 @@ const drawBarChart = function(data, options, element) {
     "color": processedOptions.titleColour
   };
   $(".y-axis-tick-label").css(yAxisTickLabelCSS);
+
+  console.log(processedData);
 
 };
 
