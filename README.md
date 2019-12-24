@@ -66,16 +66,16 @@ All the options are listed below with available choices and default options.
 
 #### Colours
 * `"theme"`
- * `"dark"`: sets background to #000000 (black), text and title colour to #FFFFFF (white)
- * `"light"`: __(default)__ sets background to #FFFFFF (white), text and title colour to #000000 (black)
- * Setting this option will also overwrite the individual colours of background, text and title (see below)
- 
+  * `"dark"`: sets background to #000000 (black), text and title colour to #FFFFFF (white)
+  * `"light"`: __(default)__ sets background to #FFFFFF (white), text and title colour to #000000 (black)
+  * Setting this option will also overwrite the individual colours of background, text and title (see below)
+
 * `"backgroundColour:"` set this as any CSS property value in quotes (ie. `"black"`, `"#000000"`, `"rgb(0, 0, 0)"`, or `"hsl(0, 0, 0)"`)
- * This option will be overwritten if you selected a theme above
+  * This option will be overwritten if you selected a theme above
 * `"textColour:"` set this as any CSS property value in quotes (ie. `"black"`, `"#000000"`, `"rgb(0, 0, 0)"`, or `"hsl(0, 0, 0)"`)
- * This option will be overwritten if you selected a theme above
+  * This option will be overwritten if you selected a theme above
 * `"titleColour:"` set this as any CSS property value in quotes (ie. `"black"`, `"#000000"`, `"rgb(0, 0, 0)"`, or `"hsl(0, 0, 0)"`)
- * This option will be overwritten if you selected a theme above
+  * This option will be overwritten if you selected a theme above
 
 ### Element
 
