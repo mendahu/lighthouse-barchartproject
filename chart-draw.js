@@ -113,17 +113,19 @@ const optionsCleaner = function(unProcessedOptions) {
   //Takes the theme and sets the background and text colours
   switch (unProcessedOptions.theme) {
   case "light":
-    inProcessingOptions.textColour = "#000000";
     inProcessingOptions.backgroundColour = "#FFFFFF";
+    inProcessingOptions.textColour = "#000000";
+    inProcessingOptions.titleColour = "#000000";
     break;
   case "dark":
-    inProcessingOptions.textColour = "#FFFFFF";
     inProcessingOptions.backgroundColour = "#000000";
+    inProcessingOptions.textColour = "#FFFFFF";
+    inProcessingOptions.titleColour = "#FFFFFF";
     break;
   default:
-    inProcessingOptions.textColour = "#000000";
     inProcessingOptions.backgroundColour = "#FFFFFF";
-    break;
+    inProcessingOptions.textColour = "#000000";
+    inProcessingOptions.titleColour = "#000000";
   }
 
 
@@ -244,7 +246,7 @@ Core function of the API is drawBarChart, which takes in three parameters and ca
 
 const drawBarChart = function(data, options, element) {
 
-  //Clears the existing chart, if there is one
+  //Clears the chart container of any elements before drawing
   element.empty();
 
   //Convert data into nested arrays of data. Reduces code redundancy since we could be passed multiple datas point per bar
@@ -252,52 +254,65 @@ const drawBarChart = function(data, options, element) {
 
   //This helper function determines a scale for the vertical Y axis based on the data.
   //Bar charts always start at 0 but the maximum height and ticks are dynamic
-  //The function outputs an array with the ticks we will use to build the chart
+  //The function outputs an array with the tick marks we will use to build the chart
   let yAxisTicks = scaleCalculator(processedData);
 
-
-  //Sets default options to configure the chart
+  //Sets default customization options to configure the chart
+  //These will be overwritten by any user inputs passed through the options parameter
   const defaultOptions = {
+
+    //BASE COLOURS
     theme: "light",
     backgroundColour: "#ffffff",
     textColour: "#000000",
+    //These colours will be overwritten based on any dark/light theme input, if passe through
 
+    //TITLE
+    titleVisible: true,
+    title: "Please Set A Title",
+    titleColour: "#000000",
+    titleSize: "med",
+
+    //AXES
+    xAxisLabelVisible: true,
+    xAxisLabel: "Please Set An X Axis Label",
+    yAxisLabelVisible: true,
+    yAxisLabel: "Please Set A Y Axis Label",
+
+    //DATA BARS AND LABELS
     barSpacing: "even",
+    //There are six default colour schemes built around the primary and secondary colours (red, blue, green, yellow, purple, orange)
     dataColours: colourSchemes.blue,
     dataLabelPosition: "top",
     dataLabelVisibility: "visible",
-    dataLabels: [],
-
-    titleVisible: false,
-    title: "Please Set A Title",
-    titleSize: "med",
-
-    xAxisLabelVisible: false,
-    xAxisLabel: "Please Set An X Axis Label",
-
-    yAxisLabelVisible: false,
-    yAxisLabel: "Please Set A Y Axis Label"
+    dataLabelColour: "#ffffff",
+    //dataLabels is generated dynamically based on how many data points come through, see below
+    dataLabels: []
   };
 
-
   //Take data from user and generate fake data labels as defaults
-  //This may be overwritten in the next line with actual user options
+  //This may be overwritten by the optionsCleaner() function with actual user options
   for (let i = 0; i < processedData.length; i++) {
     defaultOptions.dataLabels.push("Value " + (i + 1));
   }
-  console.log(defaultOptions.dataLabels);
 
-  //processedOptions is an amalgamation of the user inputs for options and the defaults to give the function its end results
-  //processedOptions goes through a cleaner function to change human readable inputs to values for use by the drawBarChart function
+  //processedOptions is an amalgamation of the user inputs for options and the defaults to give the function the final options to use
+  //processedOptions sends the options parameter through a cleaner function to change human readable inputs to values for use by the drawBarChart function
   let processedOptions = optionsCleaner(Object.assign(defaultOptions, options));
 
+
+
+
   //From here we begin creating DOM elements to display the chart
+
+
+
 
   //This creates the "chart" div which is where the chart lives and sets it to a variable for convenience
   element.append("<figure id=\"chart\"></figure>");
   let $figure = $("#chart");
 
-  //All the chart sizing and labels is contained in this object for easy manipulation by API developper.
+  //Sets sizing for chart element
   //User will have a responsive design and will not have access to these.
   let chartSizes = {
     figureHeight: $figure.width(),
@@ -318,7 +333,7 @@ const drawBarChart = function(data, options, element) {
   };
   $figure.css(figureCSS);
 
-  //Create grid-template-columns based on options
+  //Create grid-template-columns based on options. Visibility of title, x-axis label and y-axis label will alter the shape of the Grid
   (processedOptions.yAxisLabelVisible === true)
   ? $figure.css("grid-template-columns", "[y-axis-label-start]" + chartSizes.axisWidth + "[y-axis-label-end y-axis-start]" + chartSizes.axisWidth + "[y-axis-end bar-chart-left]" + chartSizes.barChartWidth + "[bar-chart-right]")
   : $figure.css("grid-template-columns", "[y-axis-start]" + chartSizes.axisWidth + "[y-axis-end bar-chart-left]" + chartSizes.barChartWidth + "[bar-chart-right]");
@@ -327,11 +342,11 @@ const drawBarChart = function(data, options, element) {
   ? $figure.css("grid-template-rows", "[title-start]" + chartSizes.axisWidth + "[title-end bar-chart-top]" + chartSizes.barChartHeight + "[bar-chart-bottom x-axis-start]" + chartSizes.axisWidth + "[x-axis-end x-axis-label-start]" + chartSizes.axisWidth + "[x-axis-label-end]")
   : $figure.css("grid-template-rows", "[title-start]" + chartSizes.axisWidth + "[title-end bar-chart-top]" + chartSizes.barChartHeight + "[bar-chart-bottom x-axis-start]" + chartSizes.axisWidth + "[x-axis-end]");
 
-  //Place Title and style as determined by options
+  //Place Title if selected and style as determined by options
   if (processedOptions.titleVisible === true) {
     $figure.append("<h2 id=\"chart-title\">" + processedOptions.title + "</h2>");
     let chartTitleCSS = {
-      "color": processedOptions.textColour,
+      "color": processedOptions.titleColour,
       "font-size": processedOptions.titleSize,
       "grid-column-start": "bar-chart-left",
       "grid-column-end": "bar-chart-right",
@@ -342,7 +357,7 @@ const drawBarChart = function(data, options, element) {
     $("#chart-title").css(chartTitleCSS);
   }
 
-  //Place x Axis Label and style as determined by options
+  //Place x Axis Label if selected and style as determined by options
   if (processedOptions.xAxisLabelVisible === true) {
     $figure.append("<span id=\"x-axis-label\">" + processedOptions.xAxisLabel + "</span>");
     let xAxisCSS = {
@@ -356,7 +371,7 @@ const drawBarChart = function(data, options, element) {
     $("#x-axis-label").css(xAxisCSS);
   }
 
-  //Place y Axis Label and style as determined by options
+  //Place y Axis Label if selected and style as determined by options
   if (processedOptions.yAxisLabelVisible === true) {
     $figure.append("<span id=\"y-axis-label\">" + processedOptions.yAxisLabel + "</span>");
     let yAxisCSS = {
@@ -373,13 +388,13 @@ const drawBarChart = function(data, options, element) {
     $("#y-axis-label").css(yAxisCSS);
   }
 
-  //Determines a base unit of width for charting the bars, based on how many data points were passed
+  //Determines a unitless width of the chartfor charting the bars, based on how many data points were passed
   //Narrow spacing makes the spaces half the width of a bar
   //Even spacing makes the spaces the same width as the bar
   //Wide spacing makes the spaces 150% the width of a bar
   let widthUnit = (processedData.length * 2) + ((processedData.length + 1) * processedOptions.barSpacing);
 
-  //Create Bar Chart using Flexboxes
+  //Create Bar Chart using Flexbox inside the Grid
   $figure.append("<div id=\"bar-chart\"></div>");
   let barChartCSS = {
     "display": "flex",
@@ -395,7 +410,7 @@ const drawBarChart = function(data, options, element) {
   };
   $("#bar-chart").css(barChartCSS);
 
-  //Create X-Axis data labels using Flexbox
+  //Create X-Axis data labels using Flexbox inside the Grid
   $figure.append("<div id=\"x-axis\"></div>");
   let xAxisCSS = {
     "display": "flex",
@@ -409,14 +424,17 @@ const drawBarChart = function(data, options, element) {
   };
   $("#x-axis").css(xAxisCSS);
 
-  //Populate bar chart flexbox with columns for bars of data and space between. Also adds x axis value containers and values
+  //Loop through data and populate bar chart flexbox and xAxis flexbox with columns for bars of data and space between.
+  //This sets up the vertical columns where the data will eventually live
   for (let i = 0; i < processedData.length; i++) {
     $("#bar-chart").append("<div id=\"bar-chart-space-" + (i + 1) + "\" class=\"bar-chart-space space\"></div>");
     $("#x-axis").append("<div id=\"x-axis-space-" + (i + 1) + "\" class=\"x-axis-space space\"></div>");
     $("#bar-chart").append("<div id=\"bar-chart-data-" + (i + 1) + "\" class=\"bar-chart-data data\"></div>");
     $("#x-axis").append("<div id=\"x-axis-data-" + (i + 1) + "\" class=\"x-axis-data data\"></div>");
+    //The next line adds labels for the x-axis
     $("#x-axis-data-" + (i + 1)).append("<span id=\"x-axis-data-label-" + (i + 1) + "\" class=\"x-axis-data-label\">" + processedOptions.dataLabels[i] + "</span>");
   }
+  //These last two lines outside the loop add the trailing space after the last data bar
   $("#bar-chart").append("<div id=\"bar-chart-space-" + (processedData.length + 1) + "\" class=\"bar-chart-space space\"></div>");
   $("#x-axis").append("<div id=\"x-axis-space-" + (processedData.length + 1) + "\" class=\"x-axis-space space\"></div>");
 
@@ -449,6 +467,8 @@ const drawBarChart = function(data, options, element) {
   $(".bar-chart-data").css(barChartDataCSS);
 
   //add data to flexboxes and size & style accordingly
+  //This nested loop accomodates two layers of data for multiple value input per bar
+  //Each loop also adds a data label to the bar
   for (let i = 0; i < processedData.length; i++) {
     for (let j = 0; j < processedData[i].length; j++) {
       let barChartDataBarsCSS = {
@@ -465,9 +485,11 @@ const drawBarChart = function(data, options, element) {
     }
     $("#bar-chart-data-" + (i + 1)).append("<div id=\"bar-chart-data-bar-" + (i + 1) + "-vertical-space\" class=\"bar-chart-data-bar-vertical-space\">");
   }
+
+  //Style the data labels based on the user options
   let barChartDataBarDataLabelCSS = {
     "text-align": "center",
-    "color": "#FFFFFF",
+    "color": processedOptions.dataLabelColour,
     "visibility": processedOptions.dataLabelVisibility
   };
   $(".bar-chart-data-bar-data-label").css(barChartDataBarDataLabelCSS);
@@ -487,11 +509,12 @@ const drawBarChart = function(data, options, element) {
   };
   $("#y-axis").css(yAxisCSS);
 
-  //Populate Y-Axis with items for each yAxis Tick, add labels, style accordingly
+  //Populate Y-Axis with items for each yAxis Tick and add labels
   for (let i = 1; i < yAxisTicks.values.length; i++) {
     $("#y-axis").append("<div id=\"y-axis-tick-" + i + "\" class=\"y-axis-tick\">");
     $("#y-axis-tick-" + i).append("<span class=\"y-axis-tick-label\">" + yAxisTicks.values[yAxisTicks.values.length - i].toFixed(yAxisTicks.sigDigits) + "</span>");
   }
+  //Style yAxis ticks
   let yAxisTickCSS = {
     "border-top": "1px solid" + processedOptions.textColour,
     "flex-basis": (1 / (yAxisTicks.values.length - 1)) + "%",
@@ -502,8 +525,6 @@ const drawBarChart = function(data, options, element) {
     "color": processedOptions.textColour
   };
   $(".y-axis-tick-label").css(yAxisTickLabelCSS);
-
-  console.log(processedData);
 
 };
 
