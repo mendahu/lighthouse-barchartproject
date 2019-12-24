@@ -35,7 +35,41 @@ let sampleOptionsLaunches = {
   dataLabelPosition: "top"
 };
 
+//This object holds a refernce to all the samplesets
 let sampleData = {
   testing: [testData, testOptions],
   sampleLaunches: [sampleDataLaunches, sampleOptionsLaunches]
 };
+
+/*
+const defaultOptions = {
+
+  //BASE COLOURS
+  theme: "light",
+  backgroundColour: "#ffffff",
+  textColour: "#000000",
+  //These colours will be overwritten based on any dark/light theme input, if passe through
+
+  //TITLE
+  titleVisible: true,
+  title: "Please Set A Title",
+  titleColour: "#000000",
+  titleSize: "med",
+
+  //AXES
+  xAxisLabelVisible: true,
+  xAxisLabel: "Please Set An X Axis Label",
+  yAxisLabelVisible: true,
+  yAxisLabel: "Please Set A Y Axis Label",
+
+  //DATA BARS AND LABELS
+  barSpacing: "even",
+  //There are six default colour schemes built around the primary and secondary colours (red, blue, green, yellow, purple, orange)
+  dataColours: colourSchemes.blue,
+  dataLabelPosition: "top",
+  dataLabelVisibility: "visible",
+  dataLabelColour: "#ffffff",
+  //dataLabels is generated dynamically based on how many data points come through, see below
+  dataLabels: []
+};
+*/
