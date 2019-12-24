@@ -126,6 +126,7 @@ const optionsCleaner = function(unProcessedOptions) {
     break;
   }
 
+
   return inProcessingOptions;
 };
 
@@ -262,20 +263,29 @@ const drawBarChart = function(data, options, element) {
     textColour: "#000000",
 
     barSpacing: "even",
-
-    valueLabelPosition: "top",
-    valueLabelColour: "ffffff",
     dataColours: colourSchemes.blue,
+    dataLabelPosition: "top",
+    dataLabelVisibility: "visible",
+    dataLabels: [],
+
     titleVisible: false,
     title: "Please Set A Title",
     titleSize: "med",
+
     xAxisLabelVisible: false,
     xAxisLabel: "Please Set An X Axis Label",
+
     yAxisLabelVisible: false,
-    yAxisLabel: "Please Set A Y Axis Label",
-    dataLabelPosition: "top",
-    dataLabelVisibility: "visible"
+    yAxisLabel: "Please Set A Y Axis Label"
   };
+
+
+  //Take data from user and generate fake data labels as defaults
+  //This may be overwritten in the next line with actual user options
+  for (let i = 0; i < processedData.length; i++) {
+    defaultOptions.dataLabels.push("Value " + (i + 1));
+  }
+  console.log(defaultOptions.dataLabels);
 
   //processedOptions is an amalgamation of the user inputs for options and the defaults to give the function its end results
   //processedOptions goes through a cleaner function to change human readable inputs to values for use by the drawBarChart function
@@ -457,6 +467,7 @@ const drawBarChart = function(data, options, element) {
   }
   let barChartDataBarDataLabelCSS = {
     "text-align": "center",
+    "color": "#FFFFFF",
     "visibility": processedOptions.dataLabelVisibility
   };
   $(".bar-chart-data-bar-data-label").css(barChartDataBarDataLabelCSS);
