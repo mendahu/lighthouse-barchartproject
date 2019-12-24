@@ -262,15 +262,15 @@ const drawBarChart = function(data, options, element) {
   const defaultOptions = {
 
     //BASE COLOURS
-    theme: "light",
     backgroundColour: "#ffffff",
     textColour: "#000000",
-    //These colours will be overwritten based on any dark/light theme input, if passe through
+    //These colours will be overwritten based on any dark/light theme input, if passed through
 
     //TITLE
     titleVisible: true,
     title: "Please Set A Title",
     titleColour: "#000000",
+    //This colour will be overwritten based on any dark/light theme input, if passed through
     titleSize: "med",
 
     //AXES
