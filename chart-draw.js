@@ -359,7 +359,7 @@ const drawBarChart = function(data, options, element) {
 
   //Place x Axis Label if selected and style as determined by options
   if (processedOptions.xAxisLabelVisible === true) {
-    $figure.append("<span id=\"x-axis-label\">" + processedOptions.xAxisLabel + "</span>");
+    $figure.append("<span id=\"x-axis-label\" class=\"chart-axes-label\">" + processedOptions.xAxisLabel + "</span>");
     let xAxisCSS = {
       "color": processedOptions.textColour,
       "grid-column-start": "bar-chart-left",
@@ -373,7 +373,7 @@ const drawBarChart = function(data, options, element) {
 
   //Place y Axis Label if selected and style as determined by options
   if (processedOptions.yAxisLabelVisible === true) {
-    $figure.append("<span id=\"y-axis-label\">" + processedOptions.yAxisLabel + "</span>");
+    $figure.append("<span id=\"y-axis-label\" class=\"chart-axes-label\">" + processedOptions.yAxisLabel + "</span>");
     let yAxisCSS = {
       "color": processedOptions.textColour,
       "display": "block",
