@@ -19,14 +19,14 @@ let testOptions = {
 //A sample dataset for demoing
 let sampleDataLaunches = [8, 31, 6, 2, 21, 27];
 let sampleOptionsLaunches = {
-  theme: "dark",
+  backgroundColour: "rgb(41, 41, 41)",
+  textColour: "#FFFFFF",
+  titleColour: "#FFFFFF",
   barSpacing: "even",
   dataColours: "orange",
   titleVisible: true,
   title: "Orbital Launches by Country, 2019",
   titleSize: "large",
-  titleColour: "#000000",
-  backgroundColour: "#ffffff",
   xAxisLabelVisible: true,
   xAxisLabel: "Countries",
   dataLabels: ["Europe", "China", "India", "Japan", "Russia", "United States"],

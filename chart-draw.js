@@ -122,10 +122,6 @@ const optionsCleaner = function(unProcessedOptions) {
     inProcessingOptions.textColour = "#FFFFFF";
     inProcessingOptions.titleColour = "#FFFFFF";
     break;
-  default:
-    inProcessingOptions.backgroundColour = "#FFFFFF";
-    inProcessingOptions.textColour = "#000000";
-    inProcessingOptions.titleColour = "#000000";
   }
 
 
