@@ -517,8 +517,12 @@ const drawBarChart = function(data, options, element) {
     "flex-grow": 1
   };
   $(".y-axis-tick").css(yAxisTickCSS);
+
+  //Style yAxis Tick LAbel CSS
   let yAxisTickLabelCSS = {
-    "color": processedOptions.textColour
+    "color": processedOptions.textColour,
+    "float": "right",
+    "padding-right": "5px"
   };
   $(".y-axis-tick-label").css(yAxisTickLabelCSS);
 
