@@ -57,13 +57,13 @@ const optionsCleaner = function(unProcessedOptions) {
   //Takes the titleSize option string and converts it from human readable to an appropropriate multipler that we can use later
   switch (unProcessedOptions.titleSize) {
   case "small":
-    inProcessingOptions.titleSize = "75%";
+    inProcessingOptions.titleSize = "50%";
     break;
   case "med":
     inProcessingOptions.titleSize = "100%";
     break;
   case "large":
-    inProcessingOptions.titleSize = "150%";
+    inProcessingOptions.titleSize = "200%";
     break;
   default:
     inProcessingOptions.titleSize = "100%";
@@ -90,7 +90,7 @@ const optionsCleaner = function(unProcessedOptions) {
     inProcessingOptions.dataColours = colourSchemes.orange;
     break;
   default:
-    inProcessingOptions.dataColours = colourSchemes.blue;
+    inProcessingOptions.dataColours = unProcessedOptions.dataColours;
   }
 
   //Takes the dataLabelPosition string and turns it into Flexbox Justify Values
