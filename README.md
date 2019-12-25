@@ -1,8 +1,10 @@
 # lighthouse-barchartproject
 Final Project for Lighthouse Labs Web Development Bootcamp
 
+---
+
 ## What is this?
-Chart-draw.js is a single javascript file that you can load with a single function accessible to you: __drawBarChart()__. It can dynamically generate a Bar Chart on your webpage.
+__chart-draw.js__ is a single javascript file that you can load with a single function accessible to you: __drawBarChart()__. It can dynamically generate a Bar Chart on your webpage.
 
 __drawBarChart__ takes in three parameters:
 
@@ -12,9 +14,13 @@ __drawBarChart__ takes in three parameters:
 
 Read the documentation below for how to use it!
 
+---
+
 ## Documentation
 
 Below is documentation on the __drawBarChart()__ function and how to use it. It is organized by the three parameters you can pass in to it, and a section on styling.
+
+---
 
 ### Data
 
@@ -36,22 +42,25 @@ drinks = [[6, 2], [8, 4]];
 ```
 #### Other notes about data
 
-* There is no code limit to amount of variables you can pass, though practically you may not be able to chart them on in a visible way on a screen. 
+* There is no code limit to amount of variables you can pass, though practically you may not be able to chart them in a visible way on a screen. 
 * You can only nest one layer of Arrays (ie. an Array of Arrays of Arrays will cause unintended behaviour).
 * Data may have decimals
 * At least one datum must be non-zero
+* Negative numbers are not supported
 * These are all acceptable data values: `452342342, 5243.093, 3.1, 9, 0, 0.5553, 0.0000003`
 * Data will be charted in the order it appears in the array
 
+---
+
 ### Options
 
-__drawBarChart()__ accepts a number of options to customize your bar chart. All of them are optional, though many would not make sense to leave unaltered. If you choose to not pass any options, please pass an empty javascript object through, like __noOptions__:
+__drawBarChart()__ accepts a number of options to customize your bar chart in the form of a javascript object. All of them are optional, though many would not make sense to leave unaltered. If you choose to not pass any options, please pass an empty javascript object through, like __noOptions__:
 
 ```javascript
 noOptions = {};
 ```
 
-A sample options for a graph about dog breeds and lifespans might look like __dogChartOptions__:
+A sample options object for a graph about dog breeds and lifespans might look like __dogChartOptions__:
 
 ```javascript
 dogChartOptions = {
@@ -138,6 +147,8 @@ All the options are listed below with available choices and default options.
   * __(default)__ #FFFFFF
   * Recommend to leave this as #FFFFFF unless also altering the colours of the bars to something with the right contrast
 
+---
+
 ### Element
 
 __drawBarChart()__ accepts a mandatory third parameter which is the target HTML element that the function will draw the bar chart inside. 
@@ -157,6 +168,8 @@ let chartHolder = $("#whereTheChartWillLive");
 
 drawBarChart(data, options, chartHolder);
 ```
+
+---
 
 ### Styling
 
