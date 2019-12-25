@@ -1,13 +1,51 @@
 html {
   background-color: #CDCDCD;
+  font-family: Arial, Helvetica, sans-serif;
 }
 main {
   max-width: 960px;
+  height: 100vh;
+  padding: 0px 10px 0px 10px;
   margin: auto;
-  background-color: black;
+  background-color: white;
   color: white;
 }
-#inputSection {
+#input-section {
   background-color: white;
   color: black;
+  padding: 20px;
 }
+header {
+  background-color: rgb(41, 41, 41);
+  padding: 20px;
+  border-radius: 0px 0px 30px 30px;
+}
+#output-section{
+  background-color: rgb(41, 41, 41);
+  padding: 20px;
+  border-radius: 30px 30px 30px 30px;
+}
+footer {
+  background-color: white;
+  color: black;
+  padding: 20px;
+}
+#chart-container {
+  padding: 20px;
+  border-radius: 30px 30px 30px 30px;
+}
+h1 {
+  font-size: 3em;
+  padding: 10px 0px 10px 0px;
+}
+h2 {
+  font-size: 2em;
+}
+.footer-text {
+  font-style: italic;
+  font-size: 1.5em;
+}
+.subtitle {
+  font-size: 1.5em;
+}
+

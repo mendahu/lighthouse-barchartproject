@@ -3,6 +3,21 @@ $(document).ready(function() {
   $("#data-submit").attr("onclick", "gatherData()");
 });
 
+const styler = function() {
+  let chartAxesLabel = {
+    "font-size": "1.5em",
+    "padding": "10px"
+  };
+  $(".chart-axes-label").css(chartAxesLabel);
+
+  let yAxisTickLabel = {
+    "font-size": "1.5em"
+  };
+  $(".y-axis-tick-label").css(yAxisTickLabel);
+  $(".x-axis-data-label").css("font-size", "1.5em");
+  $(".bar-chart-data-bar-data-label").css("font-size", "1.5em");
+};
+
 const gatherData = function() {
   //Adds a fetcher for sample data
   let $sampleDataset = $("#sample-data-selector").val();
@@ -16,4 +31,6 @@ const gatherData = function() {
 
   //draws the chart
   drawBarChart(sampleData[$sampleDataset][0], sampleData[$sampleDataset][1], $chartContainer);
+
+  styler();
 };
