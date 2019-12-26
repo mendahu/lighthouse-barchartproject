@@ -16,12 +16,39 @@
         <p class="subtitle">A Lighthouse Labs Prep Project by Jake Robins using jQuery and CSS Grid</p>
       </header>
       <section id="input-section">
-        <h2>Select your options and input your data</h2>
+        <h2>Input data and select chart options</h2>
+        <div id="input-section-title" class="input-section-header-footer">
+          <p id="input-section-title-text">...or plot a sample data set!</p>
+          <div id="sample-data-button-container">
+            <button id="sample-button-test-data" class="user-buttons">Test Data</button>
+            <button id="sample-button-launches" class="user-buttons">Rocket Launches</button>
+          </div>
+        </div>
+
+        <div id="input-section-data-selectors">
+          <div id="input-section-title-options" class="input-section-options-container">
+            <h3 class="input-section-options-container-title">Title and Axes Labels</h3>
+          </div>
+          <div id="input-section-data-options" class="input-section-options-container">
+            <h3 class="input-section-options-container-title">Data and Data Values</h3>
+          </div>
+          <div id="input-section-colour-options" class="input-section-options-container">
+            <h3 class="input-section-options-container-title">Colour Options</h3>
+          </div>
+          <div id="input-section-data-bar-options" class="input-section-options-container">
+            <h3 class="input-section-options-container-title">Data Bar Options</h3>
+          </div>
+        </div>
+
+        <div id="input-section-generator" class="input-section-header-footer">
           <select id="sample-data-selector">
             <option value="testing">Test Data</option>
             <option value="sampleLaunches">Launches 2019</option>
           </select>
-        <button id="data-submit">Generate!</button>
+          <button id="data-clear" class="user-buttons">Clear</button>
+          <button id="data-submit" class="user-buttons">Draw the Chart!</button>
+        </div>
+
       </section>
       <section id="output-section">
         <h2>Your generated bar chart</h2>

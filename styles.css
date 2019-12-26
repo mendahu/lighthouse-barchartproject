@@ -1,11 +1,12 @@
 html {
   background-color: #CDCDCD;
   font-family: Arial, Helvetica, sans-serif;
+  font-size: 10px;
 }
 main {
   max-width: 960px;
-  height: 100vh;
-  padding: 0px 10px 0px 10px;
+  height: 100%;
+  padding: 0px 10px 10px 10px;
   margin: auto;
   background-color: white;
   color: white;
@@ -48,4 +49,34 @@ h2 {
 .subtitle {
   font-size: 1.5em;
 }
-
+.input-section-header-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+}
+#input-section-title-text #sample-data-button-container {
+  flex-basis: auto;
+}
+#input-section-title-text {
+  font-size: 1.5em;
+  font-style: italic;
+  margin: 15px;
+}
+.user-buttons {
+  background-color: grey;
+  border-radius: 25px;
+  padding: 15px 20px 15px 20px;
+  margin: 0px 5px 0px 5px;
+  color: #FFFFFF;
+  font-size: 1.5em;
+}
+#input-section-data-selectors {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  align-content: stretch;
+}
+.input-section-options-container-title {
+  font-size: 1.5em;
+}
