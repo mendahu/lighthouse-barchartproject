@@ -486,7 +486,9 @@ const drawBarChart = function(data, options, element) {
   let barChartDataBarDataLabelCSS = {
     "text-align": "center",
     "color": processedOptions.dataLabelColour,
-    "visibility": processedOptions.dataLabelVisibility
+    "visibility": processedOptions.dataLabelVisibility,
+    "padding-top": "5px",
+    "padding-bottom": "5px"
   };
   $(".bar-chart-data-bar-data-label").css(barChartDataBarDataLabelCSS);
 
