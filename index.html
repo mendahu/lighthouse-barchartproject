@@ -11,11 +11,17 @@
   </head>
   <body>
     <main>
+
+      <!-- Top header section -->
       <header>
         <h1>Bar Chart Generator</h1>
         <p class="subtitle">A Lighthouse Labs Prep Project by Jake Robins using jQuery and CSS Grid</p>
       </header>
+
+      <!-- Input section where data can be placed by the user -->
       <section id="input-section">
+
+        <!-- Top subsection has test data buttons to quickly make some sample charts -->
         <h2>Input data and select chart options</h2>
         <div id="input-section-title" class="input-section-header-footer">
           <p id="input-section-title-text">...or plot a sample data set!</p>
@@ -25,23 +31,124 @@
           </div>
         </div>
 
-        <div id="input-section-data-selectors">
-          <h3 id="input-section-options-title-1-2" class="input-section-options-container-title">Title and Axes Labels</h3>
-          <div id="input-section-title-child-1-2">
-              <p>Title:</p>
-              <p>x-Axis Label:</p>
-              <p>y-Axis Label:</p>
+        <!-- Middle subsection is for user inputs -->
+        <form id="input-section-form">
+          <div class="input-section-row-1-2 input-section-column-1-5 input-section-title-container">
+            <h3 class="input-section-title">Title and Axes Labels</h3>
           </div>
-          <div id="input-section-title-child-3-4">
-            <p><input type="checkbox" name="title-visible" value="titleVisible" checked>Visible?</p>
-            <p><input type="checkbox" name="xAxis-visible" value="xAxisVisible" checked>Visible?</p>
-            <p><input type="checkbox" name="yAxis-visible" value="yAxisVisible" checked>Visible?</p>
+          <div class="input-section-options input-section-row-2-3 input-section-column-1-2 input-container-border-left">
+              <span class="input-section-options-item">Chart Title:</span>
+              <span class="input-section-options-item">x-Axis Label:</span>
+              <span class="input-section-options-item">y-Axis Label:</span>
           </div>
-          <h3 id="input-section-options-title-3-4" class="input-section-options-container-title">Data and Data Values</h3>
-          <h3 id="input-section-options-title-5-6" class="input-section-options-container-title">Colour Options</h3>
-          <h3 id="input-section-options-title-7-8" class="input-section-options-container-title">Data Bar Options</h3>
-        </div>
+          <div class="input-section-options input-section-row-2-3 input-section-column-2-3 input-container-border-bottom">
+              <span class="input-section-options-item"><input type="text" class="input-section-field-box" name="title-name-field" size="25"></span>
+              <span class="input-section-options-item"><input type="text" class="input-section-field-box" name="x-axis-name-field" size="25"></span>
+              <span class="input-section-options-item"><input type="text" class="input-section-field-box" name="y-axis-name-field" size="25"></span>
+          </div>
+          <div class="input-section-options input-section-row-2-3 input-section-column-3-4 input-container-border-bottom">
+            <span class="input-section-options-item"><input type="checkbox" name="title-visible" value="titleVisible" checked>Visible?</span>
+            <span class="input-section-options-item"><input type="checkbox" name="xAxis-visible" value="xAxisVisible" checked>Visible?</span>
+            <span class="input-section-options-item"><input type="checkbox" name="yAxis-visible" value="yAxisVisible" checked>Visible?</span>
+          </div>
+          <div class="input-section-options input-section-row-2-3 input-section-column-4-5 input-container-border-right">
+            <span class="input-section-options-item">Title Size:
+              <select name="title-size" class="input-section-field-box">
+                <option value="small">Small</option>
+                <option value="med">Medium</option>
+                <option value="large">Large</option>
+              </select>
+            </span>
+          </div>
 
+
+          <div class="input-section-row-3-4 input-section-column-1-5 input-section-title-container">
+            <h3 class="input-section-title">Data and Data Values</h3>
+          </div>
+          <div class="input-section-row-4-5">
+            <div class="input-container-border-left">
+
+            </div>
+          </div>
+
+          <div class="input-section-row-5-6 input-section-column-1-5 input-section-title-container">
+            <h3 class="input-section-title">Colour Options</h3>
+          </div>
+          <div class="input-section-options input-section-row-6-7 input-section-column-1-2 input-container-border-left">
+              <span class="input-section-options-item">Theme:</span>
+              <span class="input-section-options-item">Custom Background Colour:</span>
+              <span class="input-section-options-item">Custom Title Colour:</span>
+              <span class="input-section-options-item">Custom Text Colour:</span>
+          </div>
+          <div class="input-section-options input-section-row-6-7 input-section-column-2-3 input-container-border-bottom">
+            <span class="input-section-options-item">
+              <select name="title-size" class="input-section-field-box">
+                <option value="light">Light</option>
+                <option value="dark">Dark</option>
+                <option value="custom">Custom</option>
+              </select>
+            </span>
+            <span class="input-section-options-item">
+              <input type="color" name="background-colour" value="#FFFFFF"></select>
+            </span>
+            <span class="input-section-options-item">
+              <input type="color" name="title-colour" value="#000000"></select>
+            </span>
+            <span class="input-section-options-item">
+              <input type="color" name="text-colour" value="#000000"></select>
+            </span>
+          </div>
+          <div class="input-section-options input-section-row-6-7 input-section-column-3-4 input-container-border-bottom">
+              <span class="input-section-options-item">Data Bar Colour Scheme:</span>
+              <span class="input-section-options-item">Data Label Colour:</span>
+          </div>
+          <div class="input-section-options input-section-row-6-7 input-section-column-4-5 input-container-border-right">
+            <span class="input-section-options-item">
+              <select name="data-bar-colour-scheme" class="input-section-field-box">
+                <option value="blue">Blue</option>
+                <option value="red">Red</option>
+                <option value="green">Green</option>
+                <option value="orange">Orange</option>
+                <option value="yellow">Yellow</option>
+                <option value="purple">Purple</option>
+              </select>
+            </span>
+            <span class="input-section-options-item">
+              <input type="color" name="data-label-colour" value="#FFFFFF">
+            </span>
+          </div>
+
+          <div class="input-section-row-7-8 input-section-column-1-5 input-section-title-container">
+            <h3 class="input-section-title">Data Bar Options</h3>
+          </div>
+          <div class="input-section-options input-section-row-8-9 input-section-column-1-2 input-container-border-left">
+            <span class="input-section-options-item">Data Bar Spacing:</span>
+          </div>
+          <div class="input-section-options input-section-row-8-9 input-section-column-2-3 input-container-border-bottom">
+            <span class="input-section-options-item">
+              <select name="data-bar-spacing" class="input-section-field-box">
+                <option value="narrow">Narrow</option>
+                <option value="even">Even</option>
+                <option value="wide">Wide</option>
+              </select>
+            </span>
+          </div>
+          <div class="input-section-options input-section-row-8-9 input-section-column-3-4 input-container-border-bottom">
+            <span class="input-section-options-item">Data Bar Label Position:</span>
+          </div>
+          <div class="input-section-options input-section-row-8-9 input-section-column-4-5 input-container-border-right">
+            <span class="input-section-options-item">
+              <select name="data-bar-label-position" class="input-section-field-box">
+                <option value="top">Top of Bar</option>
+                <option value="middle">Middle of Bar</option>
+                <option value="bottom">Bottom of Bar</option>
+              </select>
+            </span>
+          </div>
+
+        </form>
+
+        <!-- Lower subsection is for generating the inputted data -->
         <div id="input-section-generator" class="input-section-header-footer">
           <select id="sample-data-selector">
             <option value="testing">Test Data</option>
@@ -52,15 +159,20 @@
         </div>
 
       </section>
+
+      <!-- Output section where chart can be drawn -->
       <section id="output-section">
         <h2>Your generated bar chart</h2>
-          <div id="chart-container">
-
-          </div>
+        <div id="chart-container">
+          <!-- Here is where the bar chart will be generated and drawn -->
+        </div>
       </section>
+
+      <!-- Final footer -->
       <footer>
         <p class="footer-text">Built by Jake Robins</p>
       </footer>
+
     </main>
   </body>
 </html>
