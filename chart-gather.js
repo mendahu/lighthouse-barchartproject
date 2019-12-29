@@ -7,7 +7,15 @@ $(document).ready(function() {
 
   //Adds the onclick listener to the generate button.
   $("#data-submit").attr("onclick", "gatherData()");
+
+  //Adds the onclick listener to the clear button.
+  $("#data-clear").attr("onclick", "clearForm()");
+
 });
+
+const clearForm = function() {
+  $("#input-section-form").trigger("reset");
+};
 
 const lineRemover = function(lineNumber) {
   //Delete the line that the function calls for
