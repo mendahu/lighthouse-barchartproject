@@ -199,3 +199,6 @@ h2 {
 .input-section-data-form-text {
   font-size: 1.6em;
 }
+#sample-data-selector {
+  visibility: hidden;
+}

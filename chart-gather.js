@@ -1,9 +1,15 @@
 $(document).ready(function() {
+
   //Creates the data input line by calling the Line adding function
   lineAdder();
 
   //Hides the first line item remover so it can't be removed
   $("#input-section-data-form-line-item-1").children().first().css("visibility", "hidden");
+
+  //Adds the onclick listener to the test buttons
+  $(".test-data-button").each(function(sampleSet) {
+    $(this).attr("onclick", "testDataFetcher(sampleData[\"" + $(this).attr("data-sampleset") + "\"])");
+  });
 
   //Adds the onclick listener to the generate button.
   $("#data-submit").attr("onclick", "gatherData()");
@@ -13,9 +19,17 @@ $(document).ready(function() {
 
 });
 
+// ******************************************************************
+// This helper function clears the form
+// ******************************************************************
+
 const clearForm = function() {
   $("#input-section-form").trigger("reset");
 };
+
+// ******************************************************************
+// This helper function removes a target line from the data line form
+// ******************************************************************
 
 const lineRemover = function(lineNumber) {
   //Delete the line that the function calls for
@@ -32,6 +46,10 @@ const lineRemover = function(lineNumber) {
   });
   $("#input-section-data-form").children().last().children().eq(0).attr("onclick", "lineAdder()");
 };
+
+// ******************************************************************
+// This helper function adds a mew line to the data line form
+// ******************************************************************
 
 const lineAdder = function() {
   //For convenience
@@ -151,7 +169,9 @@ const lineAdder = function() {
 
 };
 
-
+// ******************************************************************
+// This helper function styles the chart to match the rest of the page
+// ******************************************************************
 
 const styler = function() {
   let chartAxesLabel = {
@@ -168,19 +188,31 @@ const styler = function() {
   $(".bar-chart-data-bar-data-label").css("font-size", "1.5em");
 };
 
-const gatherData = function() {
-  //Adds a fetcher for sample data
-  let $sampleDataset = $("#sample-data-selector").val();
+// ******************************************************************
+// This helper function plots test data using the configured buttons on the HTML page
+// ******************************************************************
 
+const testDataFetcher = function(sampleDataSet) {
   //Sets value for where the chart will live
   let $chartContainer = $("#chart-container");
 
-  console.log("Selected sample dataset is " + $sampleDataset + ".\nIts values are " + sampleData[$sampleDataset][0]);
-  console.log("Selected sample dataset options are:");
-  console.log(sampleData[$sampleDataset][1]);
-
   //draws the chart
-  drawBarChart(sampleData[$sampleDataset][0], sampleData[$sampleDataset][1], $chartContainer);
+  drawBarChart(sampleDataSet[0], sampleDataSet[1], $chartContainer);
 
   styler();
 };
+
+// ******************************************************************
+// This function collects the data in the form and sends it to the chart-draw.js API
+// ******************************************************************
+
+const gatherData = function() {
+  //Sets value for where the chart will live
+  let $chartContainer = $("#chart-container");
+
+  //draws the chart
+  drawBarChart([0], {}, $chartContainer);
+
+  styler();
+};
+
