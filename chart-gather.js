@@ -9,7 +9,21 @@ $(document).ready(function() {
   $("#data-submit").attr("onclick", "gatherData()");
 });
 
+const lineRemover = function(lineNumber) {
+  //Delete the line that the function calls for
+  $("#input-section-data-form-line-item-" + lineNumber).remove();
 
+  //Rename the lines with correct ordering in case a line in the middle of the section was removed
+  $("#input-section-data-form").children().each( function(index) {
+    $(this).attr("id", "input-section-data-form-line-item-" + (index + 1));
+    $(this).children().eq(0).attr("id", "line-item-remover-button-" + (index + 1));
+    $(this).children().eq(0).attr("onclick", "lineRemover(" + (index + 1) + ")");
+    $(this).children().eq(0).children().eq(0).attr("id", "line-item-remover-" + (index + 1));
+    $(this).children().eq(1).children().eq(0).html("Data Bar " + (index + 1) + " Label: ");
+    $(this).children().eq(2).children().eq(0).html("Data Bar " + (index + 1) + " Data Points: ");
+  });
+  $("#input-section-data-form").children().last().children().eq(0).attr("onclick", "lineAdder()");
+};
 
 const lineAdder = function() {
   //For convenience
