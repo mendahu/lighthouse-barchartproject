@@ -1,5 +1,4 @@
 $(document).ready(function() {
-
   //Creates the data input line by calling the Line adding function
   lineAdder();
 
@@ -16,7 +15,6 @@ $(document).ready(function() {
 
   //Adds the onclick listener to the clear button.
   $("#data-clear").attr("onclick", "clearForm()");
-
 });
 
 // ******************************************************************
@@ -115,11 +113,11 @@ const lineAdder = function() {
   $currentLine.last().append("<div class=\"line-item-label\"><span class=\"input-section-data-form-text\">Data Bar " + (lineCount + 1 ) + " Label: </span><input type=\"text\" name=\"line-item-label-" + (lineCount + 1 ) + "\" class=\"input-section-field-box\" size=\"40\"></div>");
 
   //Create and populate cells for up to five data per bar
-  $currentLine.last().append("<div class=\"line-item-data-field\"><span class=\"input-section-data-form-text\">Data Bar " + (lineCount + 1 ) + " Data Points: </span><input type=\"text\" name=\"line-item-data-field-" + (lineCount + 1 ) + "-1\" class=\"input-section-field-box\" size=\"5\"></div>");
-  $currentLine.last().append("<div class=\"line-item-data-field\"><input type=\"text\" name=\"line-item-data-field-" + (lineCount + 1 ) + "-2\" class=\"input-section-field-box\" size=\"5\"></div>");
-  $currentLine.last().append("<div class=\"line-item-data-field\"><input type=\"text\" name=\"line-item-data-field-" + (lineCount + 1 ) + "-3\" class=\"input-section-field-box\" size=\"5\"></div>");
-  $currentLine.last().append("<div class=\"line-item-data-field\"><input type=\"text\" name=\"line-item-data-field-" + (lineCount + 1 ) + "-4\" class=\"input-section-field-box\" size=\"5\"></div>");
-  $currentLine.last().append("<div class=\"line-item-data-field\"><input type=\"text\" name=\"line-item-data-field-" + (lineCount + 1 ) + "-5\" class=\"input-section-field-box\" size=\"5\"></div>");
+  $currentLine.last().append("<div class=\"line-item-data-field\"><span class=\"input-section-data-form-text\">Data Bar " + (lineCount + 1 ) + " Data Points: </span><input type=\"text\" name=\"line-item-data-field-" + (lineCount + 1 ) + "-1\" class=\"input-section-field-box input-section-data-box\" size=\"5\"></div>");
+  $currentLine.last().append("<div class=\"line-item-data-field\"><input type=\"text\" name=\"line-item-data-field-" + (lineCount + 1 ) + "-2\" class=\"input-section-field-box input-section-data-box\" size=\"5\"></div>");
+  $currentLine.last().append("<div class=\"line-item-data-field\"><input type=\"text\" name=\"line-item-data-field-" + (lineCount + 1 ) + "-3\" class=\"input-section-field-box input-section-data-box\" size=\"5\"></div>");
+  $currentLine.last().append("<div class=\"line-item-data-field\"><input type=\"text\" name=\"line-item-data-field-" + (lineCount + 1 ) + "-4\" class=\"input-section-field-box input-section-data-box\" size=\"5\"></div>");
+  $currentLine.last().append("<div class=\"line-item-data-field\"><input type=\"text\" name=\"line-item-data-field-" + (lineCount + 1 ) + "-5\" class=\"input-section-field-box input-section-data-box\" size=\"5\"></div>");
 
   //Styles all cells with standard CSS
   let $lineItemCellCSS = {
@@ -210,8 +208,47 @@ const gatherData = function() {
   //Sets value for where the chart will live
   let $chartContainer = $("#chart-container");
 
+  //Set holder for data and options
+  let data = [[]];
+  let options = {};
+
+  //Collect the data in the form and add to data array
+  let $dataValueContainers = $(".input-section-data-box");
+  let $dataValues = [];
+  $dataValueContainers.each(function() {
+    $dataValues.push($(this).val());
+  });
+
+  let barIndex = 0;
+  for (let i = 0; i < $dataValues.length; i++) {
+    if ((i % 5 === 0) && !(i === 0)) {
+      barIndex++;
+      data.push([]);
+    }
+    if (!($dataValues[i] === "")) {
+      data[barIndex].push(Number($dataValues[i]));
+    }
+  }
+
+  //Set Chart title if inputted
+  let $chartTitle = $("input[name=\"title-name-field\"]");
+  if (!($chartTitle.val() === "")) {
+    options["title"] = $chartTitle.val();
+  }
+
+  //Set Chart Title Visibility
+  let $chartTitleVisibility = $("input[name=\"title-visible\"]");
+  console.log($chartTitleVisibility.prop("checked"));
+  if ($chartTitleVisibility.prop("checked") === true) {
+    options["titleVisible"] = true;
+  } else {
+    options["titleVisible"] = false;
+  }
+
+  console.log(options);
+
   //draws the chart
-  drawBarChart([0], {}, $chartContainer);
+  drawBarChart(data, options, $chartContainer);
 
   styler();
 };
