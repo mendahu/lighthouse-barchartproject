@@ -183,3 +183,19 @@ h2 {
   border: 1px solid rgb(199, 199, 199);
   border-radius: 5px;
 }
+.input-section-data-form-container {
+  width: 100%;
+}
+.input-section-data-form-line {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100;
+}
+#input-section-data-form {
+  width: 100%;
+}
+.input-section-data-form-text {
+  font-size: 1.6em;
+}
