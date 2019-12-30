@@ -8,7 +8,7 @@ let testOptions = {
 
   titleVisible: true,
   title: "Test Title",
-  titleSize: "large",
+  titleSize: "small",
 
   xAxisLabelVisible: true,
   xAxisLabel: "Test X Axis Label",

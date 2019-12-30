@@ -57,16 +57,16 @@ const optionsCleaner = function(unProcessedOptions) {
   //Takes the titleSize option string and converts it from human readable to an appropropriate multipler that we can use later
   switch (unProcessedOptions.titleSize) {
   case "small":
-    inProcessingOptions.titleSize = "50%";
+    inProcessingOptions.titleSize = "150%";
     break;
   case "med":
-    inProcessingOptions.titleSize = "100%";
+    inProcessingOptions.titleSize = "250%";
     break;
   case "large":
-    inProcessingOptions.titleSize = "200%";
+    inProcessingOptions.titleSize = "350%";
     break;
   default:
-    inProcessingOptions.titleSize = "100%";
+    inProcessingOptions.titleSize = "150%";
   }
 
   //Takes the colour scheme option string and sets it to appropriate colour object property
