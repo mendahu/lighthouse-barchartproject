@@ -1,52 +1,6 @@
-$(document).ready(function() {
-  //Creates the data input line by calling the Line adding function
-  lineAdder();
-
-  //Hides the first line item remover so it can't be removed
-  $("#input-section-data-form-line-item-1").children().first().css("visibility", "hidden");
-
-  //Adds the onclick listener to the test buttons
-  $(".test-data-button").each(function(sampleSet) {
-    $(this).attr("onclick", "testDataFetcher(sampleData[\"" + $(this).attr("data-sampleset") + "\"])");
-  });
-
-  //Adds the onclick listener to the generate button.
-  $("#data-submit").attr("onclick", "gatherData()");
-
-  //Adds the onclick listener to the clear button.
-  $("#data-clear").attr("onclick", "clearForm()");
-});
 
 // ******************************************************************
-// This helper function clears the form
-// ******************************************************************
-
-const clearForm = function() {
-  $("#input-section-form").trigger("reset");
-};
-
-// ******************************************************************
-// This helper function removes a target line from the data line form
-// ******************************************************************
-
-const lineRemover = function(lineNumber) {
-  //Delete the line that the function calls for
-  $("#input-section-data-form-line-item-" + lineNumber).remove();
-
-  //Rename the lines with correct ordering in case a line in the middle of the section was removed
-  $("#input-section-data-form").children().each( function(index) {
-    $(this).attr("id", "input-section-data-form-line-item-" + (index + 1));
-    $(this).children().eq(0).attr("id", "line-item-remover-button-" + (index + 1));
-    $(this).children().eq(0).attr("onclick", "lineRemover(" + (index + 1) + ")");
-    $(this).children().eq(0).children().eq(0).attr("id", "line-item-remover-" + (index + 1));
-    $(this).children().eq(1).children().eq(0).html("Data Bar " + (index + 1) + " Label: ");
-    $(this).children().eq(2).children().eq(0).html("Data Bar " + (index + 1) + " Data Points: ");
-  });
-  $("#input-section-data-form").children().last().children().eq(0).attr("onclick", "lineAdder()");
-};
-
-// ******************************************************************
-// This helper function adds a mew line to the data line form
+// This helper function adds a new line to the data line form
 // ******************************************************************
 
 const lineAdder = function() {
@@ -59,11 +13,6 @@ const lineAdder = function() {
 
   //Figures out how many lines already exist so it knows what to label new lines
   let lineCount = $form.children().length;
-  console.log(lineCount);
-
-
-
-
 
   // ******************************************************************
   // This section adds a new line to the data form
@@ -125,8 +74,6 @@ const lineAdder = function() {
   };
   $currentLine.children().css($lineItemCellCSS);
 
-
-
   // ******************************************************************
   // This section adds an add button to the data form to continue adding more lines
   // ******************************************************************
@@ -149,7 +96,6 @@ const lineAdder = function() {
 
   $("#line-item-adder-button").attr("onclick", "lineAdder()");
 
-
   //Populates the grid cell for the line item adder with the button to do so
   $currentLineCell.append("<span class=\"line-item-adder-text\" id=\"line-item-adder-" + (lineCount + 2 ) + "\">+</span>");
   $lineItemModifierTextCSS = {
@@ -165,6 +111,53 @@ const lineAdder = function() {
   $currentLineItemCellLastChild.css($lineItemModifierTextCSS);
   $currentLineItemCellLastChild.css($lineItemAdderTextCSS);
 
+};
+
+$(document).ready(function() {
+  //Creates the data input line by calling the Line adding function
+  lineAdder();
+
+  //Hides the first line item remover so it can't be removed
+  $("#input-section-data-form-line-item-1").children().first().css("visibility", "hidden");
+
+  //Adds the onclick listener to the test buttons
+  $(".test-data-button").each(function(sampleSet) {
+    $(this).attr("onclick", "testDataFetcher(sampleData[\"" + $(this).attr("data-sampleset") + "\"])");
+  });
+
+  //Adds the onclick listener to the generate button.
+  $("#data-submit").attr("onclick", "gatherData()");
+
+  //Adds the onclick listener to the clear button.
+  $("#data-clear").attr("onclick", "clearForm()");
+});
+
+// ******************************************************************
+// This helper function clears the form
+// ******************************************************************
+
+const clearForm = function() {
+  $("#input-section-form").trigger("reset");
+};
+
+// ******************************************************************
+// This helper function removes a target line from the data line form
+// ******************************************************************
+
+const lineRemover = function(lineNumber) {
+  //Delete the line that the function calls for
+  $("#input-section-data-form-line-item-" + lineNumber).remove();
+
+  //Rename the lines with correct ordering in case a line in the middle of the section was removed
+  $("#input-section-data-form").children().each( function(index) {
+    $(this).attr("id", "input-section-data-form-line-item-" + (index + 1));
+    $(this).children().eq(0).attr("id", "line-item-remover-button-" + (index + 1));
+    $(this).children().eq(0).attr("onclick", "lineRemover(" + (index + 1) + ")");
+    $(this).children().eq(0).children().eq(0).attr("id", "line-item-remover-" + (index + 1));
+    $(this).children().eq(1).children().eq(0).html("Data Bar " + (index + 1) + " Label: ");
+    $(this).children().eq(2).children().eq(0).html("Data Bar " + (index + 1) + " Data Points: ");
+  });
+  $("#input-section-data-form").children().last().children().eq(0).attr("onclick", "lineAdder()");
 };
 
 // ******************************************************************
@@ -219,6 +212,19 @@ const gatherData = function() {
     $dataValues.push($(this).val());
   });
 
+  //Check and alert user if there is no data inputted
+  console.log($dataValues);
+  let isData = false;
+  for (let i = 0; i < $dataValues.length; i++) {
+    if (!($dataValues[i] === "")) {
+      isData = true;
+    }
+  }
+  if (isData === false) {
+    alert("Please enter at least one data point to chart!");
+    return;
+  }
+
   //Loop through data array #dataValues and transform into the right format for chart-draw.js API
   //Data from the same bar has to be joined into its own nested array
   let barIndex = 0;
@@ -230,12 +236,6 @@ const gatherData = function() {
     if (!($dataValues[i] === "")) {
       data[barIndex].push(Number($dataValues[i]));
     }
-  }
-
-  //Check and alert user if there is no data inputted
-  if (data[0][0] === undefined) {
-    alert("Please enter at least one data point to chart!");
-    return;
   }
 
   //Process the Chart Title
