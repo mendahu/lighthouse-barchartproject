@@ -103,9 +103,9 @@ All the options are listed below with available choices and default options.
 * `"title:"` set the title at the top of the chart with any String. Will be passed as text inside an h2 element.
   * __(default)__ `"Please Set A Title"`
 * `"titleSize:"` Modify the size of the title's text. Please see note about styling below as well to find out what "normal size" means.
-  * `"small"` 50% of normal size
-  * `"med:"` __(default)__ 100% of normal size
-  * `"large:"` 200% of normal size
+  * `"small"`: 50% of normal size
+  * `"med"`: __(default)__ 100% of normal size
+  * `"large"`: 200% of normal size
 * `"titleColour:"` set this as any CSS property value in quotes (ie. `"black"`, `"#000000"`, `"rgb(0, 0, 0)"`, or `"hsl(0, 0, 0)"`)
   * Sets colour for the title of the chart
   * __(default)__ #000000
