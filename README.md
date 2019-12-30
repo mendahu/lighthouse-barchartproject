@@ -174,9 +174,9 @@ drawBarChart(data, options, chartHolder);
 OR
 
 ```javascript
-let chartHolder = $("#whereTheChartWillLive");
+let $chartHolder = $("#whereTheChartWillLive");
 
-drawBarChart(data, options, chartHolder);
+drawBarChart(data, options, $chartHolder);
 ```
 
 ---
