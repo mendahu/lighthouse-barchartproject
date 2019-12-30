@@ -230,6 +230,10 @@ const gatherData = function() {
   let barIndex = 0;
   for (let i = 0; i < $dataValues.length; i++) {
     if ((i % 5 === 0) && !(i === 0)) {
+      if (data[barIndex].length === 0) {
+        data[barIndex][0] = 0;
+        alert("Warning: You have a data bar with no data in it. The chart-drawing function has forced this to zero but it may display improperly. Eliminate empty bars as needed and draw again if required.");
+      }
       barIndex++;
       data.push([]);
     }
