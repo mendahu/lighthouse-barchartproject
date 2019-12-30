@@ -17,7 +17,7 @@ Read the documentation below for how to use it!
 ---
 
 ## Test Implementation
-A test implementation of this API is included in the `test-implementation` folder in the repository. Open `index.html` to try out the generator!
+A test implementation of this API is included in the repository. Open `index.html` to try out the generator! You can see a live verstion with GitHub Pages [here](https://mendahu.github.io/lighthouse-barchartproject/index.html).
 
 ---
 
