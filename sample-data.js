@@ -1,19 +1,20 @@
-//Sets a dataset for testing and QA
-let testData = [1, [1, 1], 3, [1, 1, 2], 5, [1, 2, 1, 2], 7];
-let testOptions = {
-  barSpacing: "even",
-  dataColours: colourSchemes.blue,
-  dataLabelPosition: "top",
-  dataLabelVisibility: "visible",
-
+//A sample dataset for demoing
+let sampleMarsMissions = [[3, 2], [2, 0], [1, 0]];
+let sampleOptionsMars = {
+  backgroundColour: "rgb(94, 94, 94)",
+  textColour: "#FFFFFF",
+  titleColour: "#FFFFFF",
+  barSpacing: "narrow",
+  dataColours: "orange",
   titleVisible: true,
-  title: "Test Title",
-  titleSize: "small",
-
+  title: "Active Mars Missions by Country, 2019",
+  titleSize: "med",
   xAxisLabelVisible: true,
-  xAxisLabel: "Test X Axis Label",
+  xAxisLabel: "Countries",
+  dataLabels: ["United States", "Europe", "India"],
   yAxisLabelVisible: true,
-  yAxisLabel: "Test Y Axis Label"
+  yAxisLabel: "# of Active Missions (Orbit/Surface)",
+  dataLabelPosition: "middle"
 };
 
 //A sample dataset for demoing
@@ -37,39 +38,6 @@ let sampleOptionsLaunches = {
 
 //This object holds a refernce to all the samplesets
 let sampleData = {
-  testing: [testData, testOptions],
-  sampleLaunches: [sampleDataLaunches, sampleOptionsLaunches]
+  sampleLaunches: [sampleDataLaunches, sampleOptionsLaunches],
+  marsMissions: [sampleMarsMissions, sampleOptionsMars]
 };
-
-/*
-const defaultOptions = {
-
-  //BASE COLOURS
-  theme: "light",
-  backgroundColour: "#ffffff",
-  textColour: "#000000",
-  //These colours will be overwritten based on any dark/light theme input, if passe through
-
-  //TITLE
-  titleVisible: true,
-  title: "Please Set A Title",
-  titleColour: "#000000",
-  titleSize: "med",
-
-  //AXES
-  xAxisLabelVisible: true,
-  xAxisLabel: "Please Set An X Axis Label",
-  yAxisLabelVisible: true,
-  yAxisLabel: "Please Set A Y Axis Label",
-
-  //DATA BARS AND LABELS
-  barSpacing: "even",
-  //There are six default colour schemes built around the primary and secondary colours (red, blue, green, yellow, purple, orange)
-  dataColours: colourSchemes.blue,
-  dataLabelPosition: "top",
-  dataLabelVisibility: "visible",
-  dataLabelColour: "#ffffff",
-  //dataLabels is generated dynamically based on how many data points come through, see below
-  dataLabels: []
-};
-*/
