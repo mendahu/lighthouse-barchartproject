@@ -281,8 +281,13 @@ const gatherData = function() {
     options["textColour"] = $chartTextColour.val();
   }
 
+  //Set data bar and label colour scheme
+  options["dataColours"] = $("select[name=\"data-bar-colour-scheme\"]").val();
+  options["dataLabelColour"] = $("input[name=\"data-label-colour\"]").val();
 
-  console.log(options);
+  //Set data bar spacing and label position
+  options["barSpacing"] = $("select[name=\"data-bar-spacing\"]").val();
+  options["dataLabelPosition"] = $("select[name=\"data-bar-label-position\"]").val();
 
   //draws the chart
   drawBarChart(data, options, $chartContainer);
