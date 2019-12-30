@@ -6,7 +6,7 @@ Final Project for Lighthouse Labs Web Development Bootcamp
 ## What is this?
 __chart-draw.js__ is a single javascript file that you can load with a single function accessible to you: __drawBarChart()__. It can dynamically generate a Bar Chart on your webpage.
 
-__drawBarChart__ takes in three parameters:
+__drawBarChart()__ takes in three parameters:
 
 1. __data__ - The data you want to chart
 2. __options__ - The options you want to customize the chart with
@@ -39,6 +39,9 @@ For simple data sets with one value per bar, pass it an array of Numbers. For ex
 ```javascript
 heights = [828, 632, 601];
 ```
+
+![Simple Bar Chart Example](https://github.com/mendahu/lighthouse-barchartproject/blob/master/readme_assets/simple_chart.png "Simple Bar Chart Example")
+
 
 For more complicated data sets with more than one value per bar, pass it an array of Numbers. For example, to chart the amount of drinks in my fridge based on type (beer or pop) and brand (Granville Island, Bridge Brewing as well as Coke, Dr. Pepper), send the __drinks__ variable as the first parameter:
 
