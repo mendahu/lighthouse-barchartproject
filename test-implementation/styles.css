@@ -1,0 +1,204 @@
+html {
+  background-color: #CDCDCD;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10px;
+}
+main {
+  max-width: 960px;
+  height: 100%;
+  padding: 0px 10px 10px 10px;
+  margin: auto;
+  background-color: white;
+  color: white;
+}
+header {
+  background-color: rgb(41, 41, 41);
+  padding: 20px;
+  border-radius: 0px 0px 30px 30px;
+}
+#output-section{
+  background-color: rgb(41, 41, 41);
+  padding: 20px;
+  border-radius: 30px 30px 30px 30px;
+}
+footer {
+  background-color: white;
+  color: black;
+  padding: 20px;
+}
+#chart-container {
+  padding: 20px;
+  border-radius: 30px 30px 30px 30px;
+}
+h1 {
+  font-size: 3em;
+  padding: 10px 0px 10px 0px;
+}
+h2 {
+  font-size: 2em;
+}
+.footer-text {
+  font-style: italic;
+  font-size: 1.5em;
+}
+.subtitle {
+  font-size: 1.5em;
+}
+.user-buttons {
+  background-color: grey;
+  border-radius: 25px;
+  padding: 15px 20px 15px 20px;
+  margin: 0px 5px 0px 5px;
+  color: #FFFFFF;
+  font-size: 1.5em;
+}
+#input-section {
+  background-color: white;
+  color: black;
+  padding: 20px;
+}
+.input-section-header-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+}
+#input-section-title-text #sample-data-button-container {
+  flex-basis: auto;
+}
+#input-section-title-text {
+  font-size: 1.5em;
+  font-style: italic;
+  margin: 15px;
+}
+.input-section-title {
+  font-size: 1.8em;
+  padding: 25px 10px 15px 10px;
+}
+.input-section-title-container {
+  margin-top: 30px;
+  background-color: #CDCDCD;
+  border-radius: 15px 15px 0px 0px;
+  width: 100%
+}
+
+
+/* This section handles the GRID layout for the input section */
+#input-section-form {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr 1.2fr;
+  grid-template-rows: repeat (8, auto);
+  justify-items: start;
+  align-items: center;
+  justify-content: space-evenly;
+  margin: 10px 0px 10px 0px;
+}
+.input-section-row-1-2 {
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+.input-section-row-2-3 {
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+.input-section-row-3-4 {
+  grid-row-start: 3;
+  grid-row-end: 4;
+}
+.input-section-row-4-5 {
+  grid-row-start: 4;
+  grid-row-end: 5;
+}
+.input-section-row-5-6 {
+  grid-row-start: 5;
+  grid-row-end: 6;
+}
+.input-section-row-6-7 {
+  grid-row-start: 6;
+  grid-row-end: 7;
+}
+.input-section-row-7-8 {
+  grid-row-start: 7;
+  grid-row-end: 8;
+}
+.input-section-row-8-9 {
+  grid-row-start: 8;
+  grid-row-end: 9;
+}
+.input-section-column-1-2 {
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+.input-section-column-1-5 {
+  grid-column-start: 1;
+  grid-column-end: 5;
+}
+.input-section-column-2-3 {
+  grid-column-start: 2;
+  grid-column-end: 3;
+}
+.input-section-column-3-4 {
+  grid-column-start: 3;
+  grid-column-end: 4;
+}
+.input-section-column-4-5 {
+  grid-column-start: 4;
+  grid-column-end: 5;
+}
+.input-container-border-left {
+  border-left: 3px solid #CDCDCD;
+  border-bottom: 3px solid #CDCDCD;
+  border-bottom-left-radius: 15px;
+  box-sizing: border-box;
+}
+.input-container-border-bottom {
+  border-bottom: 3px solid #CDCDCD;
+  box-sizing: border-box;
+}
+.input-container-border-right {
+  border-right: 3px solid #CDCDCD;
+  border-bottom: 3px solid #CDCDCD;
+  border-bottom-right-radius: 15px;
+  box-sizing: border-box;
+}
+/* End of GRID layout for input section */
+
+/* Additional formatting for Flexboxes inside GRID */
+.input-section-options {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: flex-end;
+  justify-content: flex-start;
+  width: 100%;
+  height: 100%;
+  padding-right: 10px;
+}
+.input-section-options-item {
+  font-size: 1.6em;
+  flex-grow: 1;
+  padding: 10px 0px 10px 0px;
+}
+.input-section-field-box {
+  border: 1px solid rgb(199, 199, 199);
+  border-radius: 5px;
+}
+.input-section-data-form-container {
+  width: 100%;
+}
+.input-section-data-form-line {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100;
+}
+#input-section-data-form {
+  width: 100%;
+}
+.input-section-data-form-text {
+  font-size: 1.6em;
+}
+#sample-data-selector {
+  visibility: hidden;
+}
