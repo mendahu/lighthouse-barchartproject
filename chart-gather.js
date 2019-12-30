@@ -232,6 +232,14 @@ const gatherData = function() {
     }
   }
 
+  //Check and alert user if there is no data inputted
+  console.log("There are " + data.length + " values.");
+  console.log(data[0][0]);
+  if (data[0][0] === undefined) {
+    alert("Please enter at least one data point to chart!");
+    return;
+  }
+
   //Process the Chart Title
   //This section checks if the Title Visibility is true, and if so, loads all the title data into Options
   //Assumption is that if the title is visible, there should also be a string for the title, but if left blank could send a blank string to the chart
