@@ -233,8 +233,6 @@ const gatherData = function() {
   }
 
   //Check and alert user if there is no data inputted
-  console.log("There are " + data.length + " values.");
-  console.log(data[0][0]);
   if (data[0][0] === undefined) {
     alert("Please enter at least one data point to chart!");
     return;
