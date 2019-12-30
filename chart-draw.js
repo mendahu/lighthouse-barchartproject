@@ -510,7 +510,7 @@ const drawBarChart = function(data, options, element) {
   //Populate Y-Axis with items for each yAxis Tick and add labels
   for (let i = 1; i < yAxisTicks.values.length; i++) {
     $("#y-axis").append("<div id=\"y-axis-tick-" + i + "\" class=\"y-axis-tick\">");
-    $("#y-axis-tick-" + i).append("<span class=\"y-axis-tick-label\">" + yAxisTicks.values[yAxisTicks.values.length - i].toFixed(yAxisTicks.sigDigits) + "</span>");
+    $("#y-axis-tick-" + i).append("<span class=\"y-axis-tick-label\">" + yAxisTicks.values[yAxisTicks.values.length - i] + "</span>");
   }
   //Style yAxis ticks
   let yAxisTickCSS = {

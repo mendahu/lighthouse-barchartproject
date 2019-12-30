@@ -207,3 +207,8 @@ Here is how you can access the text elements if you want to add additional styli
 * __x-Axis Value Labels:__ `<span class="x-axis-data-label" id="x-axis-data-label-#>` (# = the placement of the data bar from the left starting at 1)
 * __Labels inside Data Bars:__ `<span class="bar-chart-data-bar-data-label" id="bar-chart-data-bar-#-#-data-label>` (# - # = the placement of the data bar from the left starting at 1, then the placement of the value inside the bar starting from the bottom at 1, for use with multiple values in one bar).
 
+## Known Issues
+
+1. y-Axis Label may appear off-centre with longer strings in y-Axis Label
+2. Title Size may appear off depending on the size in the root element of the HTML file that calls the function
+3. Bar height cannot be smaller than bar label text and may appear out of scale for relatively small values
