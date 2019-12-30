@@ -16,6 +16,11 @@ Read the documentation below for how to use it!
 
 ---
 
+## Test Implementation
+A test implementation of this API is included in the `test-implementation` folder in the repository. Open `index.html` to try out the generator!
+
+---
+
 ## Documentation
 
 Below is documentation on the __drawBarChart()__ function and how to use it. It is organized by the three parameters you can pass in to it, and a section on styling.
