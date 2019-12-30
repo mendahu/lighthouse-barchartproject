@@ -42,12 +42,14 @@ heights = [828, 632, 601];
 
 ![Simple Bar Chart Example](https://github.com/mendahu/lighthouse-barchartproject/blob/master/readme_assets/simple_chart.png "Simple Bar Chart Example")
 
-
 For more complicated data sets with more than one value per bar, pass it an array of Numbers. For example, to chart the amount of drinks in my fridge based on type (beer or pop) and brand (Granville Island, Bridge Brewing as well as Coke, Dr. Pepper), send the __drinks__ variable as the first parameter:
 
 ```javascript
 drinks = [[6, 2], [8, 4]];
 ```
+
+![Complex Bar Chart Example](https://github.com/mendahu/lighthouse-barchartproject/blob/master/readme_assets/complex_chart.png "Complex Bar Chart Example")
+
 #### Other notes about data
 
 * There is no code limit to amount of variables you can pass, though practically you may not be able to chart them in a visible way on a screen. 
