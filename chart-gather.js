@@ -260,6 +260,17 @@ const gatherData = function() {
     options["yAxisLabel"] = $chartYLabel.val();
   }
 
+  //Set Data Bar Labels
+  let dataBarLabels = [];
+  let $dataBarLabels = $(".line-item-label").children("input");
+  $dataBarLabels.each(function() {
+    dataBarLabels.push($(this).val());
+  });
+  options["dataLabels"] = $dataBarLabels;
+
+
+
+
   console.log(options);
 
   //draws the chart
