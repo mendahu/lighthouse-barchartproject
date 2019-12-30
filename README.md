@@ -212,3 +212,34 @@ Here is how you can access the text elements if you want to add additional styli
 1. y-Axis Label may appear off-centre with longer strings in y-Axis Label
 2. Title Size may appear off depending on the size in the root element of the HTML file that calls the function
 3. Bar height cannot be smaller than bar label text and may appear out of scale for relatively small values
+
+## Roadmap
+
+1. Create legend for multiple value bars
+2. Add more customization for text sizing
+
+## Resources I used to help build this
+
+* Cloning a repo
+  * https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository
+
+* npm Install documentation
+  * https://docs.npmjs.com/cli/install
+
+* Figuring out ESLint
+  * https://eslint.org/docs/user-guide/getting-started
+  * https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
+  * https://youtu.be/cMrDePs86Uo
+
+* Installing jQuery
+  * https://www.w3schools.com/jquery/jquery_get_started.asp
+  * https://jquery.com/download/
+
+* Learning jQuery
+  * https://learn.jquery.com
+  * https://www.freecodecamp.org/learn
+  * https://htmlcheatsheet.com/jquery/
+
+* CSS Grid & Flexbox
+  * https://css-tricks.com/snippets/css/complete-guide-grid/
+  * https://css-tricks.com/snippets/css/a-guide-to-flexbox/
