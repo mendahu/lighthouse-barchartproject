@@ -219,6 +219,8 @@ const gatherData = function() {
     $dataValues.push($(this).val());
   });
 
+  //Loop through data array #dataValues and transform into the right format for chart-draw.js API
+  //Data from the same bar has to be joined into its own nested array
   let barIndex = 0;
   for (let i = 0; i < $dataValues.length; i++) {
     if ((i % 5 === 0) && !(i === 0)) {
@@ -230,20 +232,20 @@ const gatherData = function() {
     }
   }
 
-  //Set Chart title if inputted
-  let $chartTitle = $("input[name=\"title-name-field\"]");
-  if (!($chartTitle.val() === "")) {
-    options["title"] = $chartTitle.val();
-  }
-
-  //Set Chart Title Visibility
+  //Process the Chart Title
+  //This section checks if the Title Visibility is true, and if so, loads all the title data into Options
+  //Assumption is that if the title is visible, there should also be a string for the title, but if left blank could send a blank string to the chart
   let $chartTitleVisibility = $("input[name=\"title-visible\"]");
-  console.log($chartTitleVisibility.prop("checked"));
+  let $chartTitle = $("input[name=\"title-name-field\"]");
+  let $chartTitleSize = $("select[name=\"title-size\"] option:selected");
   if ($chartTitleVisibility.prop("checked") === true) {
     options["titleVisible"] = true;
+    options["title"] = $chartTitle.val();
+    options["titleSize"] = $chartTitleSize.val();
   } else {
     options["titleVisible"] = false;
   }
+
 
   console.log(options);
 
