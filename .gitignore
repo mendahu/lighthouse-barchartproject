@@ -1,2 +1,2 @@
-test-implementaton/node_modules
+test-implementaton/node_modules/*
 .DS_Store
