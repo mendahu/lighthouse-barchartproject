@@ -266,9 +266,20 @@ const gatherData = function() {
   $dataBarLabels.each(function() {
     dataBarLabels.push($(this).val());
   });
-  options["dataLabels"] = $dataBarLabels;
+  options["dataLabels"] = dataBarLabels;
 
-
+  //Set chart colour scheme
+  let $chartTheme = $("select[name=\"chart-theme\"]");
+  let $chartBackgroundColour = $("input[name=\"background-colour\"]");
+  let $chartTitleColour = $("input[name=\"title-colour\"]");
+  let $chartTextColour = $("input[name=\"text-colour\"]");
+  if ($chartTheme.val() === "light" || $chartTheme.val() === "dark") {
+    options["theme"] = $chartTheme.val();
+  } else {
+    options["backgroundColour"] = $chartBackgroundColour.val();
+    options["titleColour"] = $chartTitleColour.val();
+    options["textColour"] = $chartTextColour.val();
+  }
 
 
   console.log(options);
