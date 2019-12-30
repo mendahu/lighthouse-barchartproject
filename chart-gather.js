@@ -246,6 +246,19 @@ const gatherData = function() {
     options["titleVisible"] = false;
   }
 
+  //Set Axes Labels and Visibility
+  let $chartXVisibility = $("input[name=\"xAxis-visible\"]");
+  let $chartYVisibility = $("input[name=\"xAxis-visible\"]");
+  let $chartXLabel = $("input[name=\"x-axis-name-field\"]");
+  let $chartYLabel = $("input[name=\"y-axis-name-field\"]");
+  if ($chartXVisibility.prop("checked") === true) {
+    options["xAxisLabelVisible"] = true;
+    options["xAxisLabel"] = $chartXLabel.val();
+  }
+  if ($chartYVisibility.prop("checked") === true) {
+    options["yAxisLabelVisible"] = true;
+    options["yAxisLabel"] = $chartYLabel.val();
+  }
 
   console.log(options);
 
